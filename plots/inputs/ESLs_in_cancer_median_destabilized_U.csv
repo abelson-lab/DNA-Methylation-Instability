@@ -1,0 +1,33 @@
+,median_destabilized
+"Control 1
+n=41",18.0
+"Control 2
+n=795",30.0
+"Control 3
+n=42",97.0
+"CML
+n=69",33.0
+"MDS
+n=57",259.0
+"AML Ped.
+n=459",589.0
+"AML Ad.
+n=194",475.0
+"CLL (M)
+n=288",1150.0
+"CLL (F)
+n=202",1237.5
+"pPCL
+n=14",972.0
+"FL
+n=337",4849.0
+"MPAL
+n=31",2670.0
+"BCP-ALL
+n=663",2500.0
+"T-ALL Ped.
+n=101",2858.0
+"T-ALL Ad.
+n=143",4763.0
+"MNKPL
+n=7",4414.0
