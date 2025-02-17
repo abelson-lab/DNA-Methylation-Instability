@@ -42,12 +42,17 @@ def longitudinal_dmi(patient, beta_values):
     disease_status = list(patient['Diagnosis_remission_relapse'])
     return days_since_dx, dmi_values, disease_status
 
+## save source data
+data = pd.DataFrame(columns=['patient', 'days_since_Dx', 'DMI', 'status'])
+
 ### plotting
 fig, axs = plt.subplots(1, 4, figsize=(22, 3))
 for i, ax in enumerate(axs.flatten()):
     days_since_dx, dmi_values, disease_status = longitudinal_dmi(patients[i], beta_values)
+    for j in range(len(dmi_values)):
+        data.loc[data.shape[0]] = (f'Patient {i+1}', days_since_dx[j], dmi_values[j], disease_status[j])
+
     ax.plot(days_since_dx, dmi_values, color='black')
-    
     red_idx = [j for j in range(4) if disease_status[j] != 'remission']
     blue_idx = [j for j in range(4) if disease_status[j] == 'remission']
     for idx, color in zip([red_idx, blue_idx], ['red','blue']):
@@ -65,3 +70,5 @@ for i, ax in enumerate(axs.flatten()):
     ax.set_title(f'Patient {i+1}', fontsize=14)
 # fig.tight_layout()
 # fig.savefig('plots/figures/longitudinal_DMI.png')
+
+data.to_csv('figures/source_data/Fig_4d')

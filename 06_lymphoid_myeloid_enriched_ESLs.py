@@ -85,9 +85,9 @@ myeloid_enriched = aml_vs_tall_enriched[aml_vs_tall_enriched.isin(aml_vs_bcp_enr
 ##############################################
 # SAVE CPG SETS FOR USE IN scATAC-seq ANALYSIS
 ##############################################
-hg38cpgs = pd.read_table('data/scATAC/450k_cpgs_hg38.bed', header=None,
+hg38cpgs = pd.read_table('data/scATAC/hg38/450k_cpgs_hg38.bed', header=None,
                          names=['chr','start','end','cpg'])
-hg19cpgs = pd.read_table('data/scATAC/450k_cpgs_hg19.bed', header=None,
+hg19cpgs = pd.read_table('data/scATAC/hg19/450k_cpgs_hg19.bed', header=None,
                          names=['chr','start','end','cpg'])
 
 for sites, name in zip([lymphoid_enriched, myeloid_enriched], ['LymphoidEnriched', 'MyeloidEnriched']):

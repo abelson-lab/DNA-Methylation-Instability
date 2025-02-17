@@ -134,13 +134,19 @@ def stratify_and_boxplot(df, age_col, dmi_col, bins, bin_labels, figsize=(6, 4))
             transform=ax.transAxes, va='top', ha='left',
             fontsize=13)
 
+    return means
+
 # %%
-mygse = gse87571
-myages = ages87571
+### plot age correlation for different healthy datasets
+mygse = gse40279
+myages = ages40279
+
+# mygse = gse87571
+# myages = ages87571
+
 # mygse = gse115278
 # myages = ages115278
-# mygse = gse40279
-# myages = ages40279
+
 # mygse = gse197676
 # myages = ages197676
 
@@ -148,9 +154,11 @@ cpgs = list(set(mygse.index) & set(recurrence_above_5.index))
 dmi = np.std(mygse.loc[cpgs], axis=0)
 dmi.name = 'DMI'
 df = pd.merge(myages, dmi, right_index=True, left_index=True)
-
 labels = [i for i in range(0,95,5)]
-labels = [i for i in range(0,95,5)]
-
-stratify_and_boxplot(df, 'age', 'DMI', labels + [labels[-1]+5], 
+mean_DMI = stratify_and_boxplot(df, 'age', 'DMI', labels + [labels[-1]+5], 
                         bin_labels=labels)
+# source data
+mean_DMI.to_csv('plots/source_data/Fig_5a')
+# mean_DMI.to_csv('plots/source_data/ExtFig_5a')
+# mean_DMI.to_csv('plots/source_data/ExtFig_5b')
+# mean_DMI.to_csv('plots/source_data/ExtFig_5c')

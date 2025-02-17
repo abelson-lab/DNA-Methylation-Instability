@@ -93,7 +93,7 @@ datasets_og = {0: ['Control 1\nn=41', unknown, '#9ecae1', 'Control 1 (Unknown et
             4: ['CLL (M)\nn=288', cll_m, '#756bb1', 'Chronic Lymphocytic Leukemia (Males)'],
             4.1: ['CLL (F)\nn=202', cll_f, '#9e9ac8', 'Chronic Lymphocytic Leukemia (Females)'],
             5: ['pPCL\nn=14', ppcl, '#2b8cbe', 'Primary Plasma Cell Leukemia'],
-            6: ['FL\nn=337', fl, '#4eb3d3', 'B-cell Follicular Lymphoma'],
+            6: ['FL\nn=246', fl, '#4eb3d3', 'B-cell Follicular Lymphoma'],
             7: ['MPAL\nn=31', mpal, '#7bccc4', 'Mixed Phenotype Acute Leukemia'],
             8: ['BCP-ALL\nn=663', bcpall, '#bae4b3', 'B-cell Precursor Acute Lymphoblastic Leukemia'],
             9: ['T-ALL Ped.\nn=101', tall1, '#74c476', 'T-cell Acute Lymphoblastic Leukemia (Pediatric)'],

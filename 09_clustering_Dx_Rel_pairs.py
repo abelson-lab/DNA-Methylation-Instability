@@ -99,8 +99,11 @@ def cluster_dx_rel_pairs(cancer, dx2rel, num_sites, label):
     cpgHM = sns.clustermap(cluster_df,
                         col_linkage=col_linkage,
                         row_linkage=row_linkage,
-                        cbar_pos=(0.94,0.12,0.02,0.3), # BCP
-                        # cbar_pos=(0.92,0.176,0.02,0.3), # AML, CLL
+                        
+                        # cbar_pos=(0.94,0.12,0.02,0.3), # BCP
+                        # cbar_pos=(0.92,0.12,0.02,0.3), # AML
+                        cbar_pos=(0.92,0.176,0.02,0.3), # CLL
+                        
                         cmap='coolwarm',
                         col_colors=pair_colors,
                         # figsize=(13,10),
@@ -129,6 +132,9 @@ def cluster_dx_rel_pairs(cancer, dx2rel, num_sites, label):
         square = patches.Rectangle((i, 0), 1, 1, fill=None,
                                    edgecolor='black', linewidth=1)
         cpgHM.ax_col_colors.axes.add_patch(square)
+    
+    return cluster_df.iloc[cpgHM.dendrogram_row.reordered_ind,
+                           cpgHM.dendrogram_col.reordered_ind]
 
 def random_cluster_dx_rel_pairs(cancer, dx2rel, num_sites, label, iter=10):
     dx2cpg = get_unique_sites(cancer, dx2rel)
@@ -158,29 +164,35 @@ def random_cluster_dx_rel_pairs(cancer, dx2rel, num_sites, label, iter=10):
 ##################
 # PERMUTATION TEST
 ##################
-random.seed(678)
-bcp_scores = pd.Series(random_cluster_dx_rel_pairs(bcp, bcp_rel2dx, 10, 'BCP-ALL', 1000))
-aml_scores = pd.Series(random_cluster_dx_rel_pairs(aml, aml_rel2dx, 10, 'AML', 1000))
-cll_scores = pd.Series(random_cluster_dx_rel_pairs(cll, cll_rel2dx, 10, 'CLL', 1000))
+random.seed(420)
+bcp_scores = pd.Series(random_cluster_dx_rel_pairs(bcp, bcp_rel2dx, 15, 'BCP-ALL', 1000))
+aml_scores = pd.Series(random_cluster_dx_rel_pairs(aml, aml_rel2dx, 15, 'AML', 1000))
+cll_scores = pd.Series(random_cluster_dx_rel_pairs(cll, cll_rel2dx, 15, 'CLL', 1000))
 # %%
 # P VALUES
 print((bcp_scores[bcp_scores >= 24].shape[0] + 1) / 1001)
 print((aml_scores[aml_scores >= 10].shape[0] + 1) / 1001)
-print((cll_scores[cll_scores >= 32].shape[0] + 1) / 1001)
+print((cll_scores[cll_scores >= 31].shape[0] + 1) / 1001)
 
 # %%
 ### Pair samples based on most destabilized ESLs found at diagnosis
-n = 10
-cluster_dx_rel_pairs(aml, aml_dx2rel, n, 'AML')
-cluster_dx_rel_pairs(bcp, bcp_dx2rel, n, 'BCP-ALL')
-cluster_dx_rel_pairs(cll, cll_dx2rel, n, 'CLL')
+n = 15
+aml_heatmap = cluster_dx_rel_pairs(aml, aml_dx2rel, n, 'AML')
+bcp_heatmap = cluster_dx_rel_pairs(bcp, bcp_dx2rel, n, 'BCP-ALL')
+cll_heatmap = cluster_dx_rel_pairs(cll, cll_dx2rel, n, 'CLL')
+aml_heatmap.to_csv('plots/source_data/SuppFig_6b')
+bcp_heatmap.to_csv('plots/source_data/SuppFig_6a')
+cll_heatmap.to_csv('plots/source_data/SuppFig_6c')
 
 # %%
 ### Pair samples based on most destabilized ESLs found at relapse
-n = 10
-cluster_dx_rel_pairs(aml, aml_rel2dx, n, 'AML')
-cluster_dx_rel_pairs(bcp, bcp_rel2dx, n, 'BCP-ALL')
-cluster_dx_rel_pairs(cll, cll_rel2dx, n, 'CLL')
+n = 15
+aml_heatmap = cluster_dx_rel_pairs(aml, aml_rel2dx, n, 'AML')
+bcp_heatmap = cluster_dx_rel_pairs(bcp, bcp_rel2dx, n, 'BCP-ALL')
+cll_heatmap = cluster_dx_rel_pairs(cll, cll_rel2dx, n, 'CLL')
+aml_heatmap.to_csv('plots/source_data/ExtFig_3a')
+bcp_heatmap.to_csv('plots/source_data/Fig_4a')
+cll_heatmap.to_csv('plots/source_data/ExtFig_3b')
 
 # %%
 ###########################################################################
@@ -196,10 +208,10 @@ patient_257 = 'GSM1203645', 'GSM1204183', 'GSM1203646'
 patient_464 = 'GSM1203866', 'GSM1204207', 'GSM1203867'
 
 def compare_dx_rem_rel(patient, num_sites, label):
-    dx_unique_sites = get_unique_sites(bcp, bcp_dx2rel)[patient[0]][:num_sites]    
-    patient_sites = all_bcp_samples.loc[dx_unique_sites.index, patient]
+    # dx_unique_sites = get_unique_sites(bcp, bcp_dx2rel)[patient[0]][:num_sites]    
+    # patient_sites = all_bcp_samples.loc[dx_unique_sites.index, patient]
+    
     fig, ax = plt.subplots(figsize=(6.5,3))
-
     rel_unique_sites = get_unique_sites(bcp, bcp_rel2dx)[patient[2]][:num_sites]
     patient_sites = all_bcp_samples.loc[rel_unique_sites.index, patient]
     for cpg in patient_sites.index:
@@ -211,5 +223,9 @@ def compare_dx_rem_rel(patient, num_sites, label):
     ax.tick_params(labelsize=13)
     ax.set_title(label, fontsize=14)
 
-compare_dx_rem_rel(patient_257, 10, 'Patient 257')
-compare_dx_rem_rel(patient_464, 10, 'Patient 464')
+    return patient_sites
+
+patient_257_data = compare_dx_rem_rel(patient_257, 15, 'Patient 257')
+patient_464_data = compare_dx_rem_rel(patient_464, 15, 'Patient 464')
+patient_257_data.to_csv('plots/source_data/Fig_4b')
+patient_464_data.to_csv('plots/source_data/Fig_4c')

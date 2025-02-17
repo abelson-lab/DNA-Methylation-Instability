@@ -28,7 +28,7 @@ aml = get_cancer_specific_data(0, 997)
 tall = get_cancer_specific_data(997, 997+353)
 bcp = get_cancer_specific_data(997+353, 997+353+663)
 cll = get_cancer_specific_data(997+353+663, 997+353+663+612)
-fl = get_cancer_specific_data(997+353+663+612, 997+353+663+612+337)
+fl = get_cancer_specific_data(997+353+663+612, 997+353+663+612+246)
 pan_cancer = pan_cancer_beta, pan_cancer_binarized, recurrence
 
 def get_mean_destabilized_beta(cancer_beta, cancer_binarized, recurrence_values, r):

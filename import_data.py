@@ -34,6 +34,7 @@ with open('data/stable_sites.pkl', 'rb') as fin:
     stable_sites = pickle.load(fin)
 stable_um = stable_sites['ALL'][0]
 stable_m = stable_sites['ALL'][1]
+non_esl = pd.Series(list(set(manifest.index) - set(stable_um) - set(stable_m)))
 
 # %%
 ### Calculate recurrence from pan-cancer binarized matrix
