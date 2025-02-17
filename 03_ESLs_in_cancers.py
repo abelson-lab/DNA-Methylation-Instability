@@ -123,7 +123,7 @@ def get_mean_beta(datasets_og, esl_group): # 0=unmethylated, 1=methylated
     beta = pd.concat( [datasets[i][1] for i in datasets] )
     cpg = list(beta.index)
     df = pd.DataFrame({'group':group, 'cpg':cpg, 'beta':beta, 'label':label})
-    df.to_csv(f"plotting/inputs/ESLs_in_cancer_{['U','M'][esl_group]}.csv", index=False)
+    df.to_csv(f"plots/source_data/Fig_2_ESLs_in_cancer_{['U','M'][esl_group]}.csv", index=False)
 
 get_mean_beta(datasets_og, 0) # unmethylated
 get_mean_beta(datasets_og, 1) # methylated
@@ -145,8 +145,7 @@ def get_median_destabilized(datasets, esl_group):
         results.loc[v[0]] = np.median(df)
     return results
 
-get_median_destabilized(datasets_og, 0).to_csv(f"plotting/inputs/ESLs_in_cancer_median_destabilized_U.csv")
-get_median_destabilized(datasets_og, 1).to_csv(f"plotting/inputs/ESLs_in_cancer_median_destabilized_M.csv")
+get_median_destabilized(datasets_og, 0).to_csv(f"plots/source_data/SuppFig_3_ESLs_in_cancer_median_destabilized_U.csv")
 
 # %%
 ### GET PERTURBED ESLs, GET BETA VALUE

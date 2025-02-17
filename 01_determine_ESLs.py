@@ -80,7 +80,7 @@ for group in stable.keys():
         purified_cells_bvals['CD8T'] = mean_bvals[2]
         purified_cells_bvals['Granulocyte'] = mean_bvals[3]
         purified_cells_bvals['Monocyte'] = mean_bvals[4]
-        # purified_cells_bvals.to_csv(f"plotting/inputs/purified_cells_beta_{['U','M'][num]}_unfiltered.csv")
+        # purified_cells_bvals.to_csv(f"plots/source_data/SuppFig_2_purified_cells_beta_{['U','M'][num]}_unfiltered.csv")
 
         # remove outliers
         all_outliers = pd.Series()
@@ -102,7 +102,7 @@ for group in stable.keys():
         purified_cells_bvals['CD8T'] = mean_bvals[2]
         purified_cells_bvals['Granulocyte'] = mean_bvals[3]
         purified_cells_bvals['Monocyte'] = mean_bvals[4]
-        # purified_cells_bvals.to_csv(f"plotting/inputs/purified_cells_beta_{['U','M'][num]}_filtered.csv")
+        # purified_cells_bvals.to_csv(f"plots/source_data/Fig_1a_purified_cells_beta_{['U','M'][num]}_filtered.csv")
 
         # plotting
         sites = stable[group][num]
@@ -136,4 +136,4 @@ for group in stable.keys():
 # stable['ALL'][1].to_csv('data/ESL_M.csv', header=None, index=False)
 
 # Mean beta values at ESLs in the discovery cohort
-# mean.loc[pd.concat(stable['ALL'][:2])].to_csv('plotting/inputs/GSE105018_mean_ESL_beta.csv', header=['Beta'])
+# mean.loc[pd.concat(stable['ALL'][:2])].to_csv('plots/source_data/Fig_1b_GSE105018_mean_ESL_beta.csv', header=['Beta'])

@@ -129,8 +129,10 @@ for num, pt in enumerate(extended):
     ax1.set_title(f'Patient {renamed_pts[pt]}', fontsize=16)
 
 # save source data
-with open("plots/source_data/Fig_4e.csv", "w") as f:
+# fname = 'plots/source_data/Fig_4e_mutations_and_DMI.csv'
+fname = 'plots/source_data/ExtFig_4_mutations_and_DMI.csv'
+with open(fname, 'w') as f:
     pass  # Creates an empty file
 for pt in extended:
     df = get_dmi_and_vafs(patients[pt])
-    df.to_csv('plots/source_data/Fig_4e.csv', mode='a', index=False)
+    df.to_csv(fname, mode='a', index=False)

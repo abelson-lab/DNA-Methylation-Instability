@@ -66,7 +66,7 @@ h_meta[h_meta$BioClassification %in% myeloid_cells, 'Comparison'] = 'HSC/CMP/GMP
 h_meta[h_meta$BioClassification %in% lymphoid_cells, 'Comparison'] = 'Lymphoid'
 h_meta = h_meta[,c('Comparison', 'LymphoidEnriched-1072-hg19-100bp-frags', 'MyeloidEnriched-81-hg19-100bp-frags')]
 ### save chromVAR scores for plotting
-write.csv(h_meta, 'plots/inputs/GSE139369_chromVAR_scores.csv')
+write.csv(h_meta, 'plots/source_data/Fig_3cd_GSE139369_chromVAR_scores.csv')
 
 ### Add embeddings for UMAP based on a subset of the full dataset
 myumap = readRDS('/data/scATAC/my_umap_coords_2.RDS')

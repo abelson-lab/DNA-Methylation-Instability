@@ -180,9 +180,9 @@ n = 15
 aml_heatmap = cluster_dx_rel_pairs(aml, aml_dx2rel, n, 'AML')
 bcp_heatmap = cluster_dx_rel_pairs(bcp, bcp_dx2rel, n, 'BCP-ALL')
 cll_heatmap = cluster_dx_rel_pairs(cll, cll_dx2rel, n, 'CLL')
-aml_heatmap.to_csv('plots/source_data/SuppFig_6b')
-bcp_heatmap.to_csv('plots/source_data/SuppFig_6a')
-cll_heatmap.to_csv('plots/source_data/SuppFig_6c')
+aml_heatmap.to_csv('plots/source_data/SuppFig_6b_AML_DxRel_clustering.csv')
+bcp_heatmap.to_csv('plots/source_data/SuppFig_6a_BCP-ALL_DxRel_clustering.csv')
+cll_heatmap.to_csv('plots/source_data/SuppFig_6c_CLL_DxRel_clustering.csv')
 
 # %%
 ### Pair samples based on most destabilized ESLs found at relapse
@@ -190,9 +190,9 @@ n = 15
 aml_heatmap = cluster_dx_rel_pairs(aml, aml_rel2dx, n, 'AML')
 bcp_heatmap = cluster_dx_rel_pairs(bcp, bcp_rel2dx, n, 'BCP-ALL')
 cll_heatmap = cluster_dx_rel_pairs(cll, cll_rel2dx, n, 'CLL')
-aml_heatmap.to_csv('plots/source_data/ExtFig_3a')
-bcp_heatmap.to_csv('plots/source_data/Fig_4a')
-cll_heatmap.to_csv('plots/source_data/ExtFig_3b')
+aml_heatmap.to_csv('plots/source_data/ExtFig_3a_AML_DxRel_clustering.csv')
+bcp_heatmap.to_csv('plots/source_data/Fig_4a_BCP-ALL_DxRel_clustering.csv')
+cll_heatmap.to_csv('plots/source_data/ExtFig_3b_CLL_DxRel_clustering.csv')
 
 # %%
 ###########################################################################
@@ -227,5 +227,5 @@ def compare_dx_rem_rel(patient, num_sites, label):
 
 patient_257_data = compare_dx_rem_rel(patient_257, 15, 'Patient 257')
 patient_464_data = compare_dx_rem_rel(patient_464, 15, 'Patient 464')
-patient_257_data.to_csv('plots/source_data/Fig_4b')
-patient_464_data.to_csv('plots/source_data/Fig_4c')
+patient_257_data.to_csv('plots/source_data/Fig_4b_patient_257.csv')
+patient_464_data.to_csv('plots/source_data/Fig_4c_patient_464.csv')

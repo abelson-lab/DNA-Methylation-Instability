@@ -61,4 +61,4 @@ for i, probe_set in enumerate([unmeth_nums, meth_nums]):
     ### Save data for plotting
     youngest_beta = all_samples_beta[youngest]
     youngest_beta.columns = ['-'.join(x.split('-')[:-1]) for x in youngest_beta.columns]
-    youngest_beta.to_csv(f"plotting/inputs/methylation_atlas_beta_{['U','M'][i]}.csv")
+    youngest_beta.to_csv(f"plots/source_data/Fig_1c_methylation_atlas_beta_{['U','M'][i]}.csv")

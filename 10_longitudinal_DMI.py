@@ -71,4 +71,4 @@ for i, ax in enumerate(axs.flatten()):
 # fig.tight_layout()
 # fig.savefig('plots/figures/longitudinal_DMI.png')
 
-data.to_csv('figures/source_data/Fig_4d')
+data.to_csv('plots/source_data/Fig_4d_longitudinal_DMI.csv')

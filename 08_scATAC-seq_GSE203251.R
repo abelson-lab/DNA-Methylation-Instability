@@ -112,8 +112,8 @@ wtdf <- data.frame(
   group = factor(rep(c("Lymphoid", "HSC/CMP/GMP"),
                      c(length(lymph_wt), length(myelo_wt)))))
 
-write.csv(wtdf, 'data/scATAC/GSE203251_chromVAR_scores_MyeloidEnriched.csv')
-# write.csv(wtdf, 'data/scATAC/GSE203251_chromVAR_scores_LymphoidEnriched.csv')
+# write.csv(wtdf, 'plots/source_data/ExtFig_2c_GSE203251_chromVAR_scores_LymphoidEnriched.csv')
+write.csv(wtdf, 'plots/source_data/ExtFig_2d_GSE203251_chromVAR_scores_MyeloidEnriched.csv')
 
 figures_dir = 'plots/figures/'
 # Plot via umap coordinates from pub provided metadata
