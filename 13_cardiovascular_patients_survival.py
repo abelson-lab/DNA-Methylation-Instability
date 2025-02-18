@@ -31,9 +31,9 @@ from import_data import stable_um, recurrence_above_5
 # LOAD FRAMINGHAM COHORT AND CARDIOGENIC SHOCK PATIENT DATA
 ###########################################################
 ### Framingham cohort
-with open('data/FHS2724_beta_values.pkl', 'rb') as fin:
+with open('data/Framingham/beta_values.pkl', 'rb') as fin:
     fhs_beta = pickle.load(fin)
-fhs_clinical = pd.read_csv('data/FHS2724_clinical.csv')
+fhs_clinical = pd.read_csv('data/Framingham/FHS_clinical.csv')
 shared_id = list(set(fhs_beta.columns) & set(fhs_clinical['LABID']))
 fhs_clinical = fhs_clinical.loc[fhs_clinical['LABID'].isin(shared_id), :]
 fhs_clinical.set_index('LABID', inplace=True)
@@ -52,13 +52,13 @@ fhs_clinical = fhs_clinical[(fhs_clinical['follow_up'] >= 0)
 
 # %%
 ### Cardiogenic shock patients
-cs_beta = pr.read_r('data/idat/beta_values.RDS')[None]
-cs_clinical = pd.read_csv('data/ABE20263-SampleSheet_FINALCH.csv')
+cs_beta = pr.read_r('data/CardiogenicShock/beta_values.RDS')[None]
+cs_clinical = pd.read_csv('data/CardiogenicShock/SampleSheet.csv')
 cs_clinical['id'] = list(cs_clinical['Sentrix_ID'].astype(str) + '_' + cs_clinical['Sentrix_Position'])
 cs_clinical = cs_clinical[cs_clinical['CS_HF'] == 'Cardiogenic shock']
 cs_beta = cs_beta.loc[:,cs_clinical['id']]
 cs_clinical.rename({'Seq_ID':'ARCHCVD'}, axis=1, inplace=True)
-meta = pd.read_csv('data/fullpatient.csv')
+meta = pd.read_csv('data/CardiogenicShock/CS_clinical.csv')
 meta = meta[['ARCHCVD','follow_up','death_30d','death_90d','death_365d',
             'death_730d','death_1095','DNMT3A_VAF','TET2_VAF']]
 cs_clinical = pd.merge(cs_clinical, meta, on='ARCHCVD')
@@ -246,9 +246,9 @@ cardio_km_ch = kaplan_meier(cs_clinical, 'died', 'follow_up', 'final_CH',
 cardio_km_dmi_ch = kaplan_meier(cs_clinical, 'died', 'follow_up', 'DMI-CH',
              var_cats=[4,3,2,1], labels=['DMI+, CH+', 'DMI+, CH-', 'DMI-, CH+', 'DMI-, CH-'],
              colors=['#e31a1c', '#ff7f00', '#33a02c', '#1f78b4'])
-cardio_km_dmi.to_csv('plots/source_data/Fig_5g.csv')
-cardio_km_ch.to_csv('plots/source_data/SuppFig_7.csv')
-cardio_km_dmi_ch.to_csv('plots/source_data/Fig_5h.csv')
+cardio_km_dmi.to_csv('plots/source_data/Fig_5g.csv', index=False)
+cardio_km_ch.to_csv('plots/source_data/SuppFig_7.csv', index=False)
+cardio_km_dmi_ch.to_csv('plots/source_data/Fig_5h.csv', index=False)
 
 # %%
 s1 = coxph_multivariate(cs_clinical, 'died', 'follow_up',
@@ -267,10 +267,10 @@ framingham_km_chd = kaplan_meier(fhs_clinical, 'chd', 'fu_chd', 'high_dmi', endp
              var_cats=[False, True], labels=['Low DMI', 'High DMI'])
 framingham_km_chf = kaplan_meier(fhs_clinical, 'chf', 'fu_chf', 'high_dmi', endpoint='CHF',
              var_cats=[False, True], labels=['Low DMI', 'High DMI'])
-framingham_km_died.to_csv('plots/source_data/Fig_5b.csv')
-framingham_km_cvd.to_csv('plots/source_data/Fig_5c.csv')
-framingham_km_chd.to_csv('plots/source_data/Fig_5d.csv')
-framingham_km_chf.to_csv('plots/source_data/Fig_5e.csv')
+framingham_km_died.to_csv('plots/source_data/Fig_5b.csv', index=False)
+framingham_km_cvd.to_csv('plots/source_data/Fig_5c.csv', index=False)
+framingham_km_chd.to_csv('plots/source_data/Fig_5d.csv', index=False)
+framingham_km_chf.to_csv('plots/source_data/Fig_5e.csv', index=False)
 
 # %%
 s1 = coxph_multivariate(fhs_clinical, 'died', 'follow_up',

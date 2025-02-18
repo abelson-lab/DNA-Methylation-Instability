@@ -17,11 +17,11 @@ from import_data import stable_um, stable_m
 ################################################
 # LOAD METHYLATION CELL ATLAS FROM LOYFER ET AL.
 ################################################
-cpg_nums = pd.read_csv('data/hg38.ilmn2CpG.tsv', sep='\t', names=['probe','cpg','array'])
+cpg_nums = pd.read_csv('data/GSE186458/hg38.ilmn2CpG.tsv', sep='\t', names=['probe','cpg','array'])
 unmeth_nums = pd.merge(pd.DataFrame({'probe': stable_um}), cpg_nums).dropna()
 meth_nums =  pd.merge(pd.DataFrame({'probe': stable_m}), cpg_nums).dropna()
 
-atlas_dir = 'data/wgbs_cell_atlas/'
+atlas_dir = 'data/GSE186458/'
 atlas_samples = [x for x in os.listdir(atlas_dir) if 'GSM' in x]
 atlas_samples = sorted(atlas_samples, key=lambda x: x.split('_')[1])
 
@@ -50,7 +50,7 @@ for i, probe_set in enumerate([unmeth_nums, meth_nums]):
 
     ### Keep youngest sample from each cell type
     youngest = []
-    metadata = pd.read_table('data/GSE186458_series_matrix_fmt.txt')
+    metadata = pd.read_table('data/GSE186458/GSE186458_series_matrix_fmt.txt')
     metadata['id'] = [x.split('-')[-1] for x in metadata['sample']]
     for celltype in pd.unique(samples['cell type']):
         this_type = samples.loc[samples['cell type'] == celltype, 'sample']

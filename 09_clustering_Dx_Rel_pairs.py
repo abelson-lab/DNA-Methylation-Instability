@@ -37,20 +37,20 @@ mpl.rcParams['legend.handleheight'] = 1 # 0.7
 ## AML
 aml = pr.read_r('data/GSE159907/beta_values.RDS')[None]
 aml.columns = [x.split('_')[0] for x in aml.columns]
-with open('data/dx2rel_BEATAML.pkl', 'rb') as fin:
+with open('data/GSE159907/dx2rel_BEATAML.pkl', 'rb') as fin:
     aml_dx2rel = pickle.load(fin)
 
 ## BCP-ALL
 bcp = pd.concat([pr.read_r(file)[None] for file in [
     'data/GSE49031/BCP-ALL_beta_values.RDS',
-    'data/GSE49031/rel1/beta_values.RDS']], axis=1) 
+    'data/GSE49031/relapse1_beta_values.RDS']], axis=1) 
 bcp.columns = [x.split('_')[0] for x in bcp.columns]
-with open('data/dx2rel_BCP-ALL.pkl', 'rb') as fin:
+with open('data/GSE49031/dx2rel_BCP-ALL.pkl', 'rb') as fin:
     bcp_dx2rel = pickle.load(fin)
 
 ## CLL
-cll = pr.read_r('data/CLL165/beta_values.RDS')[None]
-with open('data/CLL165/dx2rel_CLL.pkl', 'rb') as fin:
+cll = pr.read_r('data/EGAD00010000254/beta_values.RDS')[None]
+with open('data/EGAD00010000254/dx2rel_CLL.pkl', 'rb') as fin:
     cll_dx2rel = pickle.load(fin)
 
 ### Create reciprocal relapse: diagnosis pairings
@@ -164,15 +164,16 @@ def random_cluster_dx_rel_pairs(cancer, dx2rel, num_sites, label, iter=10):
 ##################
 # PERMUTATION TEST
 ##################
-random.seed(420)
-bcp_scores = pd.Series(random_cluster_dx_rel_pairs(bcp, bcp_rel2dx, 15, 'BCP-ALL', 1000))
-aml_scores = pd.Series(random_cluster_dx_rel_pairs(aml, aml_rel2dx, 15, 'AML', 1000))
-cll_scores = pd.Series(random_cluster_dx_rel_pairs(cll, cll_rel2dx, 15, 'CLL', 1000))
+# random.seed(420)
+# bcp_scores = pd.Series(random_cluster_dx_rel_pairs(bcp, bcp_rel2dx, 15, 'BCP-ALL', 1000))
+# aml_scores = pd.Series(random_cluster_dx_rel_pairs(aml, aml_rel2dx, 15, 'AML', 1000))
+# cll_scores = pd.Series(random_cluster_dx_rel_pairs(cll, cll_rel2dx, 15, 'CLL', 1000))
+
 # %%
 # P VALUES
-print((bcp_scores[bcp_scores >= 24].shape[0] + 1) / 1001)
-print((aml_scores[aml_scores >= 10].shape[0] + 1) / 1001)
-print((cll_scores[cll_scores >= 31].shape[0] + 1) / 1001)
+# print((bcp_scores[bcp_scores >= 24].shape[0] + 1) / 1001)
+# print((aml_scores[aml_scores >= 10].shape[0] + 1) / 1001)
+# print((cll_scores[cll_scores >= 31].shape[0] + 1) / 1001)
 
 # %%
 ### Pair samples based on most destabilized ESLs found at diagnosis

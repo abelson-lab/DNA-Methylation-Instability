@@ -20,9 +20,9 @@ from import_data import stable_um, recurrence_above_5
 ############################################### 
 # LOAD METHYLATION, MUTATION, AND CLINICAL DATA
 ###############################################
-beta_values = pr.read_r('data/AML_PB_beta_values.RDS')[None]
-clinical_data = pd.read_table('data/Sample_info.txt')
-muts = pd.read_csv('data/all_muts_final.csv')
+beta_values = pr.read_r('data/longitudinal_AML/PB_beta_values.RDS')[None]
+clinical_data = pd.read_table('data/longitudinal_AML/PB_sample_info.txt')
+muts = pd.read_csv('data/PB_all_mutations.csv')
 muts = muts[muts['Reported at diagnosis'] == 'YES']
 mut_pts = list(muts['realID'].drop_duplicates()) + ['MH_6745']
 

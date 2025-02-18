@@ -19,8 +19,8 @@ from import_data import stable_um, recurrence_above_5
 ################################################# 
 # LOAD LONGITUDINAL AML SAMPLES AND CLINICAL DATA
 #################################################
-beta_values = pr.read_r('data/beta_values.RDS')[None]
-clinical_data = pd.read_csv('data/clinical_data.csv')
+beta_values = pr.read_r('data/longitudinal_AML/BM_beta_values.RDS')[None]
+clinical_data = pd.read_csv('data/longitudinal_AML/BM_clinical_data.csv')
 
 patients = {0: clinical_data.iloc[:4,:].copy(),
             1: clinical_data.iloc[8:12,:].copy(),

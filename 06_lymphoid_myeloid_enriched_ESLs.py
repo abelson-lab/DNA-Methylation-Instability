@@ -90,10 +90,10 @@ hg38cpgs = pd.read_table('data/scATAC/hg38/450k_cpgs_hg38.bed', header=None,
 hg19cpgs = pd.read_table('data/scATAC/hg19/450k_cpgs_hg19.bed', header=None,
                          names=['chr','start','end','cpg'])
 
-for sites, name in zip([lymphoid_enriched, myeloid_enriched], ['LymphoidEnriched', 'MyeloidEnriched']):
-    f = f'data/scATAC/{name}-{sites.shape[0]}'
-    hg38cpgs[hg38cpgs['cpg'].isin(sites)].to_csv(f'{f}-hg38.bed', index=False, header=None, sep='\t')
-    hg19cpgs[hg19cpgs['cpg'].isin(sites)].to_csv(f'{f}-hg19.bed', index=False, header=None, sep='\t')
+# for sites, name in zip([lymphoid_enriched, myeloid_enriched], ['LymphoidEnriched', 'MyeloidEnriched']):
+#     f = f'data/scATAC/{name}-{sites.shape[0]}'
+#     hg38cpgs[hg38cpgs['cpg'].isin(sites)].to_csv(f'{f}-hg38.bed', index=False, header=None, sep='\t')
+#     hg19cpgs[hg19cpgs['cpg'].isin(sites)].to_csv(f'{f}-hg19.bed', index=False, header=None, sep='\t')
 
 # %%
 #####################################
@@ -104,7 +104,7 @@ colColors = []
 for i, cancer in enumerate([aml, tall, bcp]): colColors.extend([colors[i]]*cancer.shape[1])
 
 sites = lymphoid_enriched
-sites = myeloid_enriched
+# sites = myeloid_enriched
 
 df = pd.concat([aml, tall, bcp], axis=1).loc[sites]
 

@@ -39,11 +39,11 @@ from import_data import stable_sites, stable_um, stable_m
 # LOAD ALL HEMATOLOGICAL CANCER DATASETS
 ########################################
 # Acute myeloid leukemia (n = 997)
-tcga_laml = pyreadr.read_r('data/TCGA_LAML/beta_values.RDS')[None]
-with open('data/GSE159907/beta_values_Dx_only.pkl', 'rb') as fin: 
+tcga_laml = pyreadr.read_r('data/TCGA-LAML/beta_values.RDS')[None]
+with open('data/GSE159907/Dx_beta_values.pkl', 'rb') as fin: 
     gse159907 = pickle.load(fin)
-gse124413 = pyreadr.read_r('data/GSE124413/beta_values.RDS')[None]
-with open('data/GSE153347/beta_values_unique_pts.pkl', 'rb') as fin: 
+gse124413 = pyreadr.read_r('data/GSE124413/AML_beta_values.RDS')[None]
+with open('data/GSE153347/unique_pts_beta_values.pkl', 'rb') as fin: 
     gse153347 = pickle.load(fin)
 aml = [tcga_laml, gse159907, gse124413, gse153347]
 aml = pd.concat(aml, axis=1)
@@ -58,15 +58,15 @@ tall = pd.concat([gse147667, gse155333, gse49031_tall], axis=1)
 bcpall = pyreadr.read_r('data/GSE49031/BCP-ALL_beta_values.RDS')[None]
 
 # Chronic lymphocytic leukemia (n = 612)
-gse143411 = pyreadr.read_r('data/GSE143411/timepoint1/beta_values.RDS')[None]
+gse143411 = pyreadr.read_r('data/GSE143411/timepoint1_beta_values.RDS')[None]
 gse136724 = pyreadr.read_r('data/GSE136724/beta_values.RDS')[None]
-egaCLL490 = pyreadr.read_r('data/EGA-CLL490/beta_values.RDS')[None]
-with open('data/CLL165/beta_values_40_Dx.pkl', 'rb') as fin:
+egaCLL490 = pyreadr.read_r('data/EGAD00010001975/beta_values.RDS')[None]
+with open('data/EGAD00010000254/Dx_beta_values.pkl', 'rb') as fin:
     egaCLL40 = pickle.load(fin)
 cll = pd.concat([gse143411, gse136724, egaCLL490, egaCLL40], axis=1)
 
 # Follicular lymphoma (n = 246)
-fl = pyreadr.read_r('data/02_FL_Samples/fl/beta_values.RDS')[None]
+fl = pyreadr.read_r('data/FL/beta_values.RDS')[None]
 # Diffuse Large B-cell Lymphoma (n = 96)
 dlbcl1 = pyreadr.read_r('data/GSE255869/beta_values.RDS')[None]
 # Primary plasma cell leukemia (n = 14)
@@ -86,12 +86,11 @@ all_cancers_binarized = (all_cancers > stable_sites['ALL'][2]).astype(int)
 
 # %%
 ### Save data
-with open('data/pan-cancer_beta.pkl', 'wb') as fout:
-    pickle.dump(all_cancers, fout, pickle.HIGHEST_PROTOCOL)
-with open('data/pan-cancer_beta_binarized.pkl', 'wb') as fout:
-    pickle.dump(all_cancers_binarized, fout, pickle.HIGHEST_PROTOCOL)
-# all_cancers.to_csv('data/pan-cancer_beta.csv')
-# all_cancers_binarized.to_csv('data/pan-cancer_beta_binarized.csv')
+# with open('data/general/pan-cancer-3019_beta.pkl', 'wb') as fout:
+#     pickle.dump(all_cancers, fout, pickle.HIGHEST_PROTOCOL)
+# with open('data/general/pan-cancer-3019_beta_binarized.pkl', 'wb') as fout:
+#     pickle.dump(all_cancers_binarized, fout, pickle.HIGHEST_PROTOCOL)
+# all_cancers_binarized.to_csv('supplementary/SupplementaryTable2.csv')
 
 # %%
 ###### ANNOTATION OF COLUMNS ######
@@ -125,4 +124,4 @@ for df, name, id in zip(dfs, names, ids):
 
 column_anno['index'] = range(1, column_anno.shape[0]+1)
 column_anno = column_anno[['index'] + list(column_anno.columns[:-1])]
-# column_anno.to_csv('supplementary/SupplementaryTable2C.csv', index=False)
+# column_anno.to_csv('supplementary/SupplementaryTable2_column_annotations.csv', index=False)

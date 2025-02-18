@@ -158,7 +158,7 @@ labels = [i for i in range(0,95,5)]
 mean_DMI = stratify_and_boxplot(df, 'age', 'DMI', labels + [labels[-1]+5], 
                         bin_labels=labels)
 # source data
-mean_DMI.to_csv('plots/source_data/Fig_5a')
-# mean_DMI.to_csv('plots/source_data/ExtFig_5a')
-# mean_DMI.to_csv('plots/source_data/ExtFig_5b')
-# mean_DMI.to_csv('plots/source_data/ExtFig_5c')
+mean_DMI.to_csv('plots/source_data/Fig_5a.csv')
+# mean_DMI.to_csv('plots/source_data/ExtFig_5a.csv')
+# mean_DMI.to_csv('plots/source_data/ExtFig_5b.csv')
+# mean_DMI.to_csv('plots/source_data/ExtFig_5c.csv')
