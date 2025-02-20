@@ -103,8 +103,8 @@ colors = ['#b2df8a', '#6a3d9a', '#ff7f00']
 colColors = []
 for i, cancer in enumerate([aml, tall, bcp]): colColors.extend([colors[i]]*cancer.shape[1])
 
-sites = lymphoid_enriched
-# sites = myeloid_enriched
+# sites, fname = lymphoid_enriched, 'SuppFig_4a_lymphoid_enriched_sites' 
+sites, fname = myeloid_enriched, 'SuppFig_4b_myeloid_enriched_sites'
 
 df = pd.concat([aml, tall, bcp], axis=1).loc[sites]
 
@@ -129,3 +129,6 @@ cpgHM.ax_heatmap.axes.set_yticklabels(range(0, df.shape[0], countby),
 
 cpgHM.ax_heatmap.axes.tick_params(labelbottom = False, bottom=False,
                                 labelright=True, right=True)
+# save figure and source data
+df.to_csv(f'plots/source_data/{fname}.csv')
+cpgHM.savefig(f'plots/figures/{fname}.png')

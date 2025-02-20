@@ -105,7 +105,7 @@ def stratify_and_boxplot(df, age_col, dmi_col, bins, bin_labels, figsize=(6, 4))
     s_err = np.sqrt(np.sum(residuals**2) / (n - 2))
     # Critical t-value for the given confidence level
     confidence = 0.95
-    t_value = t.ppf((1 + confidence) / 2, df=n - 2)
+    t_value = st.t.ppf((1 + confidence) / 2, df=n - 2)
     # Confidence intervals
     x_var = np.sum((x - x_mean) ** 2)
     ci = t_value * s_err * np.sqrt(1 / n + (x - x_mean) ** 2 / x_var)
@@ -134,31 +134,24 @@ def stratify_and_boxplot(df, age_col, dmi_col, bins, bin_labels, figsize=(6, 4))
             transform=ax.transAxes, va='top', ha='left',
             fontsize=13)
 
-    return means
+    return fig, means
 
 # %%
-### plot age correlation for different healthy datasets
-mygse = gse40279
-myages = ages40279
+### plot and save data
+for gse, ages, fname in zip([gse40279, gse87571, gse115278, gse197676],
+                            [ages40279, ages87571, ages115278, ages197676],
+                            ['Fig_5a_GSE40279_age_correlation',
+                             'ExtFig_5a_GSE87571_age_correlation',
+                             'ExtFig_5b_GSE115278_age_correlation',
+                             'ExtFig_5c_GSE197676_age_correlation']):
 
-# mygse = gse87571
-# myages = ages87571
-
-# mygse = gse115278
-# myages = ages115278
-
-# mygse = gse197676
-# myages = ages197676
-
-cpgs = list(set(mygse.index) & set(recurrence_above_5.index))
-dmi = np.std(mygse.loc[cpgs], axis=0)
-dmi.name = 'DMI'
-df = pd.merge(myages, dmi, right_index=True, left_index=True)
-labels = [i for i in range(0,95,5)]
-mean_DMI = stratify_and_boxplot(df, 'age', 'DMI', labels + [labels[-1]+5], 
-                        bin_labels=labels)
-# source data
-mean_DMI.to_csv('plots/source_data/Fig_5a.csv')
-# mean_DMI.to_csv('plots/source_data/ExtFig_5a.csv')
-# mean_DMI.to_csv('plots/source_data/ExtFig_5b.csv')
-# mean_DMI.to_csv('plots/source_data/ExtFig_5c.csv')
+    cpgs = list(set(gse.index) & set(recurrence_above_5.index))
+    dmi = np.std(gse.loc[cpgs], axis=0)
+    dmi.name = 'DMI'
+    df = pd.merge(ages, dmi, right_index=True, left_index=True)
+    labels = [i for i in range(0,95,5)]
+    fig, mean_DMI = stratify_and_boxplot(df, 'age', 'DMI', labels + [labels[-1]+5], 
+                            bin_labels=labels)
+    fig.tight_layout()
+    fig.savefig(f'plots/figures/{fname}.png')
+    mean_DMI.to_csv(f'plots/source_data/{fname}.csv')

@@ -22,9 +22,9 @@ from import_data import stable_um, recurrence_above_5
 ###############################################
 beta_values = pr.read_r('data/longitudinal_AML/PB_beta_values.RDS')[None]
 clinical_data = pd.read_table('data/longitudinal_AML/PB_sample_info.txt')
-muts = pd.read_csv('data/PB_all_mutations.csv')
+muts = pd.read_csv('data/longitudinal_AML/PB_all_mutations.csv')
 muts = muts[muts['Reported at diagnosis'] == 'YES']
-mut_pts = list(muts['realID'].drop_duplicates()) + ['MH_6745']
+mut_pts = list(muts['altID'].drop_duplicates()) + ['MH_6745']
 
 patients = {}
 for sample in pd.unique(clinical_data['LTB patient ID']):
@@ -48,7 +48,7 @@ def get_dmi_and_vafs(patient):
     result_df['Time Point'] = ['Diagnosis', 'T2', 'T3']
     result_df['DMI'] = dmi_values
     
-    mutations = muts[muts['realID'] == patient_id]
+    mutations = muts[muts['altID'] == patient_id]
     for pos in pd.unique(mutations['Position']):
         vafs = []
         mutation_i = mutations[mutations['Position'] == pos]
@@ -65,9 +65,8 @@ def get_dmi_and_vafs(patient):
 
 # %%
 ### plotting
-
-# extended = ['2522_86899', 'MH_6726', '2522_85368', 'MH_6745']
-extended = ['2522_86891', '2522_86210', 'MH_6729', 'MH_6747', '2522_85291', '2522_87221']
+# fname, pts_to_plot = 'Fig_4e_mutations_and_DMI', ['2522_86899', 'MH_6726', '2522_85368', 'MH_6745']
+fname, pts_to_plot = 'ExtFig_4_mutations_and_DMI', ['2522_86891', '2522_86210', 'MH_6729', 'MH_6747', '2522_85291', '2522_87221']
 
 fig = plt.figure(figsize=(18, 10))
 outer = gridspec.GridSpec(2, 3, figure=fig, hspace=0.2, wspace=0.25)
@@ -77,7 +76,7 @@ for i in range(6):
     gs.append(gridspec.GridSpecFromSubplotSpec(2, 1,
                                                subplot_spec = outer[i],
                                                hspace=0.05))
-for num, pt in enumerate(extended):
+for num, pt in enumerate(pts_to_plot):
     cell1 = gs[num][0]
     cell2 = gs[num][1]
     ax1 = plt.subplot(cell1)
@@ -128,11 +127,10 @@ for num, pt in enumerate(extended):
 
     ax1.set_title(f'Patient {renamed_pts[pt]}', fontsize=16)
 
+fig.savefig(f'plots/figures/{fname}.png')
 # save source data
-# fname = 'plots/source_data/Fig_4e_mutations_and_DMI.csv'
-fname = 'plots/source_data/ExtFig_4_mutations_and_DMI.csv'
 with open(fname, 'w') as f:
     pass  # Creates an empty file
-for pt in extended:
+for pt in pts_to_plot:
     df = get_dmi_and_vafs(patients[pt])
-    df.to_csv(fname, mode='a', index=False)
+    df.to_csv(f'plots/source_data/{fname}.csv', mode='a', index=False)

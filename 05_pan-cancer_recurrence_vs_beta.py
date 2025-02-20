@@ -74,7 +74,7 @@ def plot(cancer_beta, cancer_binarized, recurrence_values, label, data, gs=None)
 
     # plot # ESLs against recurrence
     log10_counts = np.log10([recurrence_values[recurrence_values == x].shape[0] for x in data['recurrence']])
-    ax2.bar(data['recurrence'], log10_counts, width=0.003, color='red')
+    ax2.bar(data['recurrence'], log10_counts, width=0.0045, color='red')
     ax2.set_ylabel('log\n(# ESLs)', fontsize=11)
     ax2.set_xlabel('Recurrence', fontsize=14)
     ax2.tick_params(labelsize=12)
@@ -84,10 +84,18 @@ def plot(cancer_beta, cancer_binarized, recurrence_values, label, data, gs=None)
 
 # %%
 ### generate data to plot
+source_data = pd.DataFrame(columns=['cancer_type', 'recurrence', 'mean_beta'])
 cancer_datas = []
 for label, data in zip(['Pan-cancer', 'AML', 'T-ALL', 'BCP-ALL', 'CLL', 'FL'],
                        [pan_cancer, aml, tall, bcp, cll, fl]):
-    cancer_datas.append(get_data(data[0], data[1], data[2], label))
+    cancer_i = get_data(data[0], data[1], data[2], label)
+    cancer_datas.append(cancer_i)
+
+    cancer_i['cancer_type'] = label
+    cancer_i = cancer_i[['cancer_type', 'recurrence', 'mean_beta']]
+    source_data = pd.concat([source_data, cancer_i])
+
+source_data.to_csv('plots/source_data/SuppFig_5_beta_value_recurrence_correlation.csv', index=False)
 
 # %%
 ### plot into 2x3 grid
@@ -105,3 +113,5 @@ for gs_i, label, data, preload in zip(gs,
                           [pan_cancer, aml, tall, bcp, cll, fl],
                           cancer_datas):
     plot(data[0], data[1], data[2], label, data=preload, gs=gs_i)
+
+fig.savefig('plots/figures/SuppFig_5_beta_value_recurrence_correlation.png')

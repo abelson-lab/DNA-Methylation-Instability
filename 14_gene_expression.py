@@ -15,20 +15,20 @@ from joblib import Parallel, delayed
 
 # %%
 ### LOAD PANCANCER METHYLATION VS. EXPRESSION RESULTS
-with open('data/meth_vs_exp_results.pkl', 'rb') as fin:
+with open('data/gene_expression/pan-cancer_meth_vs_expression.pkl', 'rb') as fin:
     methExp = pickle.load(fin)
 mani = manifest.loc[methExp.index].copy()
 
 # %%
 ### LOAD HEALTHY AGING AND AML RNAseq DATA
-healthySamples = pd.read_csv('data/wholeBloodSampleInfo.csv')
-ages = pd.read_csv('data/GTEx_Analysis_v8_Annotations_SubjectPhenotypesDS.txt', sep='\t')
+healthySamples = pd.read_csv('data/gene_expression/GTEx_blood_sample_annotations.csv')
+ages = pd.read_csv('data/gene_expression/GTEx_Analysis_v8_Annotations_SubjectPhenotypesDS.txt', sep='\t')
 healthySamples['SUBJID'] = ['-'.join(healthySamples.at[i, 'SAMPID'].split('-')[:2]) for i in healthySamples.index]
 healthyAge = pd.merge(healthySamples, ages, on='SUBJID')
-healthyTpms = pd.read_csv('data/GTEx980/wbTPMs.csv')
+healthyTpms = pd.read_csv('data/gene_expression/GTEx_blood_sample_TPMs.csv')
 healthyTpms.set_index('Description', inplace=True)
 
-amlTpms = pd.read_csv('data/TCGA-LAML_tpms2.csv')
+amlTpms = pd.read_csv('data/gene_expression/TCGA-LAML_TPMs.csv')
 amlTpms.set_index('gene_name', inplace=True)
 
 groups = sorted(list(pd.unique(healthyAge['AGE'])))
@@ -82,7 +82,6 @@ for i in gene_cgi.index:
             ages.extend( len(thisgroup) * [int(agegroup[:2])] )
         except:
              print(i, gene)
-
     try:
         r, p = st.pearsonr(ages, tpmdata)
         gene_cgi.at[i, 'ageExpR'] = r
@@ -101,7 +100,7 @@ gene_cgi
 
 # %%
 ## ADD HG38 CGI COORDINATES
-hg38cgis = pd.read_table('data/all_cgis_450k_toHg38.bed',
+hg38cgis = pd.read_table('data/gene_expression/all_cgis_450k_toHg38.bed',
                          header=None, names=['chr','start','end','id'], index_col='id')
 
 gene_cgi['chr'] = pd.NA
@@ -115,45 +114,46 @@ for i in gene_cgi.index:
 
 # %%
 ##### CALCULATE LOG2FC HYPERMETHYLATION IN AML WGBS ####
-chroms = ['chr'+str(i) for i in range(1,23)] # + ['chrX', 'chrY']
-with open('data/allSamples.pkl', 'rb') as fin:
-    allSamples = pickle.load(fin)
+# chroms = ['chr'+str(i) for i in range(1,23)] # + ['chrX', 'chrY']
+# with open('data/gene_expression/aml_and_control_WGBS.pkl', 'rb') as fin:
+#     allSamples = pickle.load(fin)
 
-# iterate through CGIs and calculate p value, logFC for each
-def dmr_cgis(chrm):
-    results = hg38cgis.copy()
-    results['-log10p'] = np.nan
-    results['log2FC'] = np.nan
-    thisSamples = allSamples[allSamples['chr'] == chrm]
-    results = results[results['chr'] == chrm]
-    for i in results.index:
-        chrom, start, end = results.loc[i, ['chr','start','end']]
-        start, end = int(start), int(end)
-        selection = thisSamples[(thisSamples['chr'] == chrom) &
-                            (thisSamples['start'] >= start) &
-                            (thisSamples['end'] <= end)]
+# # iterate through CGIs and calculate p value, logFC for each
+# def dmr_cgis(chrm):
+#     results = hg38cgis.copy()
+#     results['-log10p'] = np.nan
+#     results['log2FC'] = np.nan
+#     thisSamples = allSamples[allSamples['chr'] == chrm]
+#     results = results[results['chr'] == chrm]
+#     for i in results.index:
+#         chrom, start, end = results.loc[i, ['chr','start','end']]
+#         start, end = int(start), int(end)
+#         selection = thisSamples[(thisSamples['chr'] == chrom) &
+#                             (thisSamples['start'] >= start) &
+#                             (thisSamples['end'] <= end)]
         
-        healthy = selection.iloc[:,3:9].values.flatten()
-        healthy = healthy[~np.isnan(healthy)]
-        aml = selection.iloc[:,9:15].values.flatten()
-        aml = aml[~np.isnan(aml)]
-        try:
-            result = st.mannwhitneyu(healthy, aml)
-            results.at[i, '-log10p'] = -np.log10(result[1])
-            results.at[i, 'log2FC'] = np.log2(np.mean(aml) / np.mean(healthy))
-        except:
-            results.at[i, '-log10p'] = pd.NA
-            results.at[i, 'log2FC'] = pd.NA
-    print(chrm)
-    return results
+#         healthy = selection.iloc[:,3:9].values.flatten()
+#         healthy = healthy[~np.isnan(healthy)]
+#         aml = selection.iloc[:,9:15].values.flatten()
+#         aml = aml[~np.isnan(aml)]
+#         try:
+#             result = st.mannwhitneyu(healthy, aml)
+#             results.at[i, '-log10p'] = -np.log10(result[1])
+#             results.at[i, 'log2FC'] = np.log2(np.mean(aml) / np.mean(healthy))
+#         except:
+#             results.at[i, '-log10p'] = pd.NA
+#             results.at[i, 'log2FC'] = pd.NA
+#     print(chrm)
+#     return results
 
 ### run in parallel
-dfs = Parallel(n_jobs=10)(delayed(dmr_cgis)(c) for c in chroms[:])
-results = pd.concat(dfs, axis=0)
-# results.to_csv('WGBS_results_MWU.csv')
+# dfs = Parallel(n_jobs=10)(delayed(dmr_cgis)(c) for c in chroms[:])
+# results = pd.concat(dfs, axis=0)
+# results.to_csv('data/gene_expression/WGBS_results_MWU.csv')
 
 # %%
-# results = pd.read_csv('WGBS_results_MWU.csv', index_col='id')
+### ADD RESULTS FROM AML WGBS HYPERMETHYLATION ANALYSIS ###
+results = pd.read_csv('data/gene_expression/WGBS_results_MWU.csv', index_col='id')
 gene_cgi['-log10p'] = pd.NA
 gene_cgi['log2FC'] = pd.NA
 for i in gene_cgi.index:
@@ -186,15 +186,15 @@ supp3 = supp3[['gene', 'CGI_chr', 'CGI_start', 'CGI_end',
 # bonferroni for ageExpP value
 supp3['age_vs_exp_Pvalue'] = supp3['age_vs_exp_Pvalue'] * gene_cgi['gene'].drop_duplicates().shape[0]
 
-supp3.to_csv('data/SupplementaryTable3_FULL.csv', index=False)
+supp3.to_csv('data/gene_expression/SupplementaryTable3_FULL.csv', index=False)
 
 # %%
 ### 3D SCATTERPLOT ###
-df = pd.read_csv('data/SupplementaryTable3_FULL.csv')
+df = pd.read_csv('data/gene_expression/SupplementaryTable3_FULL.csv')
 df = df[df['mean_recurrence'] > 0.05]
 df.sort_values(by='mean_recurrence', ascending=False, inplace=True)
 df.drop_duplicates(subset='gene', inplace=True)
-genes234 = pd.read_csv('data/SupplementaryTable3.csv').iloc[:,0].drop_duplicates()
+genes234 = pd.read_csv('data/gene_expression/SupplementaryTable3.csv').iloc[:,0].drop_duplicates()
 top_genes = df[df['gene'].isin(genes234)]
 all_other_genes = df[~df['gene'].isin(genes234)]
 
@@ -231,4 +231,8 @@ ax.set_xlabel('Age vs. Expression R')
 ax.set_ylabel('Methylation vs. Expression R')
 ax.set_zlabel('Recurrence')
 
-# fig.savefig('plots/figures/Fig_6c.svg', format='svg')
+fig.savefig('plots/figures/Fig_6c_gene_expression_3D_scatter.png')
+source_data = pd.concat([top_genes, all_other_genes])[[
+    'gene', 'mean_recurrence', 'meth_vs_exp_R_mean',
+    'meth_vs_exp_maxPvalue', 'age_vs_exp_R', 'age_vs_exp_Pvalue']]
+source_data.to_csv('plots/source_data/Fig_6c_gene_expression_3D_scatter.csv', index=False)

@@ -68,7 +68,7 @@ for i, ax in enumerate(axs.flatten()):
     ax.tick_params(labelsize=12)
     ax.set_xlabel('Days since diagnosis', fontsize=13)
     ax.set_title(f'Patient {i+1}', fontsize=14)
-# fig.tight_layout()
-# fig.savefig('plots/figures/longitudinal_DMI.png')
 
-data.to_csv('plots/source_data/Fig_4d_longitudinal_DMI.csv')
+fig.tight_layout()
+fig.savefig('plots/figures/Fig_4d_longitudinal_DMI.png')
+data.to_csv('plots/source_data/Fig_4d_longitudinal_DMI.csv', index=False)

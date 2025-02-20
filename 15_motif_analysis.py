@@ -1,8 +1,6 @@
 # %%
 import pandas as pd
 import numpy as np
-from Bio import SeqIO
-from Bio.Seq import Seq
 import re
 import seaborn as sns
 from matplotlib.colors import ListedColormap
@@ -16,12 +14,10 @@ from scipy.cluster import hierarchy
 ##############################################################
 # LOAD ESLs AND JASPAR MOTIF HITS FOR ALL 234 CGIs, INTERSECT.
 ##############################################################
-genes234 = pd.read_csv('data/SupplementaryTable3.csv').iloc[:,0].drop_duplicates()
-
-esls = pd.read_table('data/topGenes234_CpGs.bed',
+genes234 = pd.read_csv('data/gene_expression/SupplementaryTable3.csv').iloc[:,0].drop_duplicates()
+esls = pd.read_table('data/gene_expression/topGenes234_CpGs.bed',
                      header=None, names=['chr','start','end','cpg', 'gene'])
-
-motif_hits = pd.read_table('data/topGenes234_CGIs_Jaspar_motifs.bed', 
+motif_hits = pd.read_table('data/gene_expression/topGenes234_CGIs_Jaspar_motifs.bed', 
                            header=None, names=['chrom', 'chromStart', 'chromEnd', 'jasparID', 'score', 'strand', 'tf'])
 motif_hits['tf'] = motif_hits['tf'].str.upper()
 
@@ -66,7 +62,7 @@ for tf in tf_counts.index:
 genes_motifs_mtx_bin = (genes_motifs_mtx > 0).astype(int)
 
 # %%
-### get TF groupings for annotation bar.
+### get TF groupings for annotation bar
 tfnames = pd.Series(genes_motifs_mtx_bin.index)
 tf_groups = dict.fromkeys(['ATF','CDX', 'CREB','E2F','EGR','ELF','ELK','ERF','ETV',
                            'FOS', 'FOX', 'GLI', 'HES', 'HOX', 'JUN', 'KLF', 'MAF', 'NR',
@@ -166,5 +162,5 @@ cpgHM.ax_row_colors.tick_params(left=False)
 cpgHM.ax_row_colors.set_ylabel('TF Groups', fontsize=27)
 cpgHM.ax_heatmap.axes.set_xlabel('Genes', fontsize=27)
 
-cpgHM.savefig('plots/figures/TF_heatmap.svg', format='svg')
-mtx.iloc[:, cpgHM.dendrogram_col.reordered_ind].to_csv('plots/source_data/Fig_6e.csv')
+cpgHM.savefig('plots/figures/Fig_6e_TF_heatmap.png')
+mtx.iloc[:, cpgHM.dendrogram_col.reordered_ind].to_csv('plots/source_data/Fig_6e_TF_heatmap.csv')

@@ -133,8 +133,8 @@ def cluster_dx_rel_pairs(cancer, dx2rel, num_sites, label):
                                    edgecolor='black', linewidth=1)
         cpgHM.ax_col_colors.axes.add_patch(square)
     
-    return cluster_df.iloc[cpgHM.dendrogram_row.reordered_ind,
-                           cpgHM.dendrogram_col.reordered_ind]
+    return cpgHM, cluster_df.iloc[cpgHM.dendrogram_row.reordered_ind,
+                                  cpgHM.dendrogram_col.reordered_ind]
 
 def random_cluster_dx_rel_pairs(cancer, dx2rel, num_sites, label, iter=10):
     dx2cpg = get_unique_sites(cancer, dx2rel)
@@ -178,28 +178,38 @@ def random_cluster_dx_rel_pairs(cancer, dx2rel, num_sites, label, iter=10):
 # %%
 ### Pair samples based on most destabilized ESLs found at diagnosis
 n = 15
-aml_heatmap = cluster_dx_rel_pairs(aml, aml_dx2rel, n, 'AML')
-bcp_heatmap = cluster_dx_rel_pairs(bcp, bcp_dx2rel, n, 'BCP-ALL')
-cll_heatmap = cluster_dx_rel_pairs(cll, cll_dx2rel, n, 'CLL')
-aml_heatmap.to_csv('plots/source_data/SuppFig_6b_AML_DxRel_clustering.csv')
-bcp_heatmap.to_csv('plots/source_data/SuppFig_6a_BCP-ALL_DxRel_clustering.csv')
-cll_heatmap.to_csv('plots/source_data/SuppFig_6c_CLL_DxRel_clustering.csv')
+aml_heatmap, aml_data = cluster_dx_rel_pairs(aml, aml_dx2rel, n, 'AML')
+bcp_heatmap, bcp_data = cluster_dx_rel_pairs(bcp, bcp_dx2rel, n, 'BCP-ALL')
+cll_heatmap, cll_data = cluster_dx_rel_pairs(cll, cll_dx2rel, n, 'CLL')
+
+aml_heatmap.savefig('plots/figures/SuppFig_6b_AML_DxRel_clustering.png')
+bcp_heatmap.savefig('plots/figures/SuppFig_6a_BCP-ALL_DxRel_clustering.png')
+cll_heatmap.savefig('plots/figures/SuppFig_6c_CLL_DxRel_clustering.png')
+
+aml_data.to_csv('plots/source_data/SuppFig_6b_AML_DxRel_clustering.csv')
+bcp_data.to_csv('plots/source_data/SuppFig_6a_BCP-ALL_DxRel_clustering.csv')
+cll_data.to_csv('plots/source_data/SuppFig_6c_CLL_DxRel_clustering.csv')
 
 # %%
 ### Pair samples based on most destabilized ESLs found at relapse
 n = 15
-aml_heatmap = cluster_dx_rel_pairs(aml, aml_rel2dx, n, 'AML')
-bcp_heatmap = cluster_dx_rel_pairs(bcp, bcp_rel2dx, n, 'BCP-ALL')
-cll_heatmap = cluster_dx_rel_pairs(cll, cll_rel2dx, n, 'CLL')
-aml_heatmap.to_csv('plots/source_data/ExtFig_3a_AML_DxRel_clustering.csv')
-bcp_heatmap.to_csv('plots/source_data/Fig_4a_BCP-ALL_DxRel_clustering.csv')
-cll_heatmap.to_csv('plots/source_data/ExtFig_3b_CLL_DxRel_clustering.csv')
+aml_heatmap, aml_data = cluster_dx_rel_pairs(aml, aml_rel2dx, n, 'AML')
+bcp_heatmap, bcp_data = cluster_dx_rel_pairs(bcp, bcp_rel2dx, n, 'BCP-ALL')
+cll_heatmap, cll_data = cluster_dx_rel_pairs(cll, cll_rel2dx, n, 'CLL')
+
+aml_heatmap.savefig('plots/figures/ExtFig_3a_AML_DxRel_clustering.png')
+bcp_heatmap.savefig('plots/figures/Fig_4a_BCP-ALL_DxRel_clustering.png')
+cll_heatmap.savefig('plots/figures/ExtFig_3b_CLL_DxRel_clustering.png')
+
+aml_data.to_csv('plots/source_data/ExtFig_3a_AML_DxRel_clustering.csv')
+bcp_data.to_csv('plots/source_data/Fig_4a_BCP-ALL_DxRel_clustering.csv')
+cll_data.to_csv('plots/source_data/ExtFig_3b_CLL_DxRel_clustering.csv')
 
 # %%
 ###########################################################################
 # CHECK REMISSION SAMPLES OF 2 PATIENTS TO CONFIRM THAT METHYLATION DROPPED
 ###########################################################################
-all_bcp_samples = pr.read_r('data/GSE49031/beta_values.RDS')[None]
+all_bcp_samples = pr.read_r('data/GSE49031/patients_257_464_beta_values.RDS')[None]
 all_bcp_samples.columns = [x.split('_')[0] for x in all_bcp_samples.columns]
 
 # %%
@@ -224,9 +234,12 @@ def compare_dx_rem_rel(patient, num_sites, label):
     ax.tick_params(labelsize=13)
     ax.set_title(label, fontsize=14)
 
-    return patient_sites
+    return fig, patient_sites
 
-patient_257_data = compare_dx_rem_rel(patient_257, 15, 'Patient 257')
-patient_464_data = compare_dx_rem_rel(patient_464, 15, 'Patient 464')
+patient_257_fig, patient_257_data = compare_dx_rem_rel(patient_257, 15, 'Patient 257')
+patient_464_fig, patient_464_data = compare_dx_rem_rel(patient_464, 15, 'Patient 464')
+
+patient_257_fig.savefig('plots/figures/Fig_4b_patient_257.png')
+patient_464_fig.savefig('plots/figures/Fig_4c_patient_464.png')
 patient_257_data.to_csv('plots/source_data/Fig_4b_patient_257.csv')
 patient_464_data.to_csv('plots/source_data/Fig_4c_patient_464.csv')

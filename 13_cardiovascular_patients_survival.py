@@ -54,19 +54,16 @@ fhs_clinical = fhs_clinical[(fhs_clinical['follow_up'] >= 0)
 ### Cardiogenic shock patients
 cs_beta = pr.read_r('data/CardiogenicShock/beta_values.RDS')[None]
 cs_clinical = pd.read_csv('data/CardiogenicShock/SampleSheet.csv')
-cs_clinical['id'] = list(cs_clinical['Sentrix_ID'].astype(str) + '_' + cs_clinical['Sentrix_Position'])
+cs_clinical['id'] = list(cs_clinical['Sentrix_ID'].astype(int).astype(str) + '_' + cs_clinical['Sentrix_Position'])
 cs_clinical = cs_clinical[cs_clinical['CS_HF'] == 'Cardiogenic shock']
 cs_beta = cs_beta.loc[:,cs_clinical['id']]
 cs_clinical.rename({'Seq_ID':'ARCHCVD'}, axis=1, inplace=True)
 meta = pd.read_csv('data/CardiogenicShock/CS_clinical.csv')
-meta = meta[['ARCHCVD','follow_up','death_30d','death_90d','death_365d',
-            'death_730d','death_1095','DNMT3A_VAF','TET2_VAF']]
+meta = meta[['ARCHCVD','follow_up','death_1095']]
 cs_clinical = pd.merge(cs_clinical, meta, on='ARCHCVD')
 
 cs_clinical.set_index('id', inplace=True)
 cs_clinical['died'] = cs_clinical['death_1095'].astype(bool)
-cs_clinical['TET2'] = cs_clinical['gene'].replace('TET2', True).replace('BOTH', True).replace('DNMT3A', False).fillna(False)
-cs_clinical['DNMT3A'] = cs_clinical['gene'].replace('TET2', False).replace('BOTH', True).replace('DNMT3A', True).fillna(False)
 
 cs_dmi = np.std(cs_beta.loc[recurrence_above_5.index], axis=0); cs_dmi.name = 'DMI'
 cs_clinical = pd.merge(cs_clinical, cs_dmi, left_index=True, right_index=True)
@@ -184,7 +181,7 @@ def kaplan_meier(clinical_data, outcome, follow_up, variable,
                                'time': data[j*2],
                                'probability': data[1 + j*2]})
         df = pd.concat([df, cat_df])
-    return df
+    return fig, df
 
 def coxph_multivariate(clinical_data, outcome, follow_up, covariates):
     summaries = []
@@ -236,19 +233,25 @@ def forest_plot(results):
 
     ax2.set_xlim(0, 8)
     ax2.axis('off')
+    return fig
 
 # %%
 ### Cardiogenic shock
-cardio_km_dmi = kaplan_meier(cs_clinical, 'died', 'follow_up', 'high_dmi',
+fig1, cardio_km_dmi = kaplan_meier(cs_clinical, 'died', 'follow_up', 'high_dmi',
              var_cats=[False, True], labels=['Low DMI', 'High DMI'])
-cardio_km_ch = kaplan_meier(cs_clinical, 'died', 'follow_up', 'final_CH',
+fig2, cardio_km_ch = kaplan_meier(cs_clinical, 'died', 'follow_up', 'final_CH',
              var_cats=[False, True], labels=['CH-', 'CH+'])
-cardio_km_dmi_ch = kaplan_meier(cs_clinical, 'died', 'follow_up', 'DMI-CH',
+fig3, cardio_km_dmi_ch = kaplan_meier(cs_clinical, 'died', 'follow_up', 'DMI-CH',
              var_cats=[4,3,2,1], labels=['DMI+, CH+', 'DMI+, CH-', 'DMI-, CH+', 'DMI-, CH-'],
              colors=['#e31a1c', '#ff7f00', '#33a02c', '#1f78b4'])
-cardio_km_dmi.to_csv('plots/source_data/Fig_5g.csv', index=False)
-cardio_km_ch.to_csv('plots/source_data/SuppFig_7.csv', index=False)
-cardio_km_dmi_ch.to_csv('plots/source_data/Fig_5h.csv', index=False)
+
+fig1.savefig('plots/figures/Fig_5g_cardiogenic_shock_DMI.png')
+fig2.savefig('plots/figures/SuppFig_7_cardiogenic_shock_CH.png')
+fig3.savefig('plots/figures/Fig_5h_cardiogenic_shock_DMI-CH.png')
+
+cardio_km_dmi.to_csv('plots/source_data/Fig_5g_cardiogenic_shock_DMI.csv', index=False)
+cardio_km_ch.to_csv('plots/source_data/SuppFig_7_cardiogenic_shock_CH.csv', index=False)
+cardio_km_dmi_ch.to_csv('plots/source_data/Fig_5h_cardiogenic_shock_DMI-CH.csv', index=False)
 
 # %%
 s1 = coxph_multivariate(cs_clinical, 'died', 'follow_up',
@@ -259,18 +262,24 @@ forest_plot(mortality)
 
 # %%
 ### Framingham
-framingham_km_died = kaplan_meier(fhs_clinical, 'died', 'follow_up', 'high_dmi',
+fig1, framingham_km_died = kaplan_meier(fhs_clinical, 'died', 'follow_up', 'high_dmi',
              var_cats=[False, True], labels=['Low DMI', 'High DMI'])
-framingham_km_cvd = kaplan_meier(fhs_clinical, 'cvd', 'fu_cvd', 'high_dmi', endpoint='CVD',
+fig2, framingham_km_cvd = kaplan_meier(fhs_clinical, 'cvd', 'fu_cvd', 'high_dmi', endpoint='CVD',
              var_cats=[False, True], labels=['Low DMI', 'High DMI'])
-framingham_km_chd = kaplan_meier(fhs_clinical, 'chd', 'fu_chd', 'high_dmi', endpoint='CHD',
+fig3, framingham_km_chd = kaplan_meier(fhs_clinical, 'chd', 'fu_chd', 'high_dmi', endpoint='CHD',
              var_cats=[False, True], labels=['Low DMI', 'High DMI'])
-framingham_km_chf = kaplan_meier(fhs_clinical, 'chf', 'fu_chf', 'high_dmi', endpoint='CHF',
+fig4, framingham_km_chf = kaplan_meier(fhs_clinical, 'chf', 'fu_chf', 'high_dmi', endpoint='CHF',
              var_cats=[False, True], labels=['Low DMI', 'High DMI'])
-framingham_km_died.to_csv('plots/source_data/Fig_5b.csv', index=False)
-framingham_km_cvd.to_csv('plots/source_data/Fig_5c.csv', index=False)
-framingham_km_chd.to_csv('plots/source_data/Fig_5d.csv', index=False)
-framingham_km_chf.to_csv('plots/source_data/Fig_5e.csv', index=False)
+
+fig1.savefig('plots/figures/Fig_5b_framingham_mortality.png')
+fig2.savefig('plots/figures/Fig_5c_framingham_CVD.png')
+fig3.savefig('plots/figures/Fig_5d_framingham_CHD.png')
+fig4.savefig('plots/figures/Fig_5e_framingham_CHF.png')
+
+framingham_km_died.to_csv('plots/source_data/Fig_5b_framingham_mortality.csv', index=False)
+framingham_km_cvd.to_csv('plots/source_data/Fig_5c_framingham_CVD.csv', index=False)
+framingham_km_chd.to_csv('plots/source_data/Fig_5d_framingham_CHD.csv', index=False)
+framingham_km_chf.to_csv('plots/source_data/Fig_5e_framingham_CHF.csv', index=False)
 
 # %%
 s1 = coxph_multivariate(fhs_clinical, 'died', 'follow_up',
@@ -286,4 +295,5 @@ age_sex_corrected = pd.concat([s1[-1].iloc[0], s2[-1].iloc[0],
                                s3[-1].iloc[0], s4[-1].iloc[0]], axis = 1)
 age_sex_corrected.columns = ['Mortality', 'CVD', 'CHD', 'CHF']
 age_sex_corrected = age_sex_corrected.T
-forest_plot(age_sex_corrected)
+fig = forest_plot(age_sex_corrected)
+fig.savefig('plots/figures/Fig_5f_CoxPH_HRs.png')
