@@ -13,7 +13,7 @@ import pickle
 from scipy import stats as st
 from scipy.spatial import distance
 from scipy.cluster import hierarchy
-from import_data import pan_cancer_binarized, pan_cancer_beta
+from import_data import pan_cancer_binarized
 
 # %%
 ########################################
@@ -22,10 +22,6 @@ from import_data import pan_cancer_binarized, pan_cancer_beta
 aml = pan_cancer_binarized.iloc[:, :997]
 tall = pan_cancer_binarized.iloc[:, 997 : 997+353]
 bcp = pan_cancer_binarized.iloc[:, 997+353 : 997+353+663]
-
-aml_beta = pan_cancer_beta.iloc[:, :997]
-tall_beta = pan_cancer_beta.iloc[:, 997 : 997+353]
-bcp_beta = pan_cancer_beta.iloc[:, 997+353 : 997+353+663]
 
 # %%
 ##############################################################

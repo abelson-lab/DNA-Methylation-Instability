@@ -1,13 +1,8 @@
 # %%
 #############################################################################
-# Calculate correlation between DMI and age in cohorts of healthy individuals
-
-# Requires:
-# - GSE87571_beta_values.RDS
-# - GSE115278_beta_values.RDS
-# - GSE40279_beta_values.RDS
-# - GSE197676_beta_values.RDS
-# Download these files from Zenodo: <URL>
+# Calculate correlation between DMI and age in cohorts of healthy individuals.
+#
+# Download the required input files from Zenodo:
 ########################################################################
 import numpy as np
 import pandas as pd

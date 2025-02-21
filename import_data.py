@@ -2,12 +2,8 @@
 ##############################################################
 # Auxiliary data that is used throughout the various analyses.
 # Other scripts will import this data from here when needed.
-
-# Requires:
-# - humanmethylation450_15017482_v1-2.csv (Illumina manifest)
-# - pan-cancer_beta_binarized.pkl
-# - pan-cancer_beta.pkl
-# Download these files from Zenodo: <URL>
+#
+# Download the required input files from Zenodo:
 ##############################################################
 import pandas as pd
 import numpy as np

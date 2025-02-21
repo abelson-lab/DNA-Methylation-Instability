@@ -2,10 +2,8 @@
 ########################################################################
 # Examine DMI levels and mutation VAFs in AML patients who were sampled
 # at diagnosis and post-induction therapy
-
-# Requires:
-# - AML_PB_beta_values.RDS
-# Download these files from Zenodo: <URL>
+#
+# Download the required input files from Zenodo:
 ########################################################################
 import matplotlib as mpl
 import matplotlib.pyplot as plt

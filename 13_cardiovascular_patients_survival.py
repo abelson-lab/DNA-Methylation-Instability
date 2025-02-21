@@ -2,15 +2,8 @@
 ########################################################################
 # Conduct Kaplan-Meier and Cox proportional hazards regression analyses
 # on the Framingham Heart Study cohort and the cardiogenic shock cohort
-
-# Requires:
-# - CS_beta_values.RDS
-# Download these files from Zenodo: <URL>
-
-# RESTRICTED ACCESS:
-# - FHS_beta_values.RDS
-#     - original data at database of Genotypes and Phenotypes (dbGaP):
-#           phs000007.v32.p13
+#
+# Download the required input files from Zenodo:
 ########################################################################
 import pickle
 import matplotlib as mpl

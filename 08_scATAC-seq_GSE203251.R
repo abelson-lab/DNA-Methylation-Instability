@@ -1,3 +1,11 @@
+######################################################################
+# Calculate chromVAR deviation scores and visualize scATAC-seq data of
+# hematopoietic cells from Izzo et al.
+#
+# scATAC-seq data can be downloaded from the Gene Expression Omnibus
+#   database (ID: GSE203251).
+# Download other required input files from Zenodo:
+######################################################################
 library(Seurat)
 library(Signac)
 library(Matrix)

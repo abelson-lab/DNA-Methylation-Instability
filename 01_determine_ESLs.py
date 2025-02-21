@@ -2,13 +2,7 @@
 ############################################################
 # Generate list of unmethylated and methylated ESLs.
 #
-# Requires:
-# - GSE105018_beta_values.RDS
-# - GSE124413_healthy_BM_beta_values.RDS
-# - GSE141682_beta_values.RDS
-# - GSE132203_beta_values.RDS
-# - GSE103541_beta_values.RDS
-# Download these files from Zenodo: <URL>
+# Download the required input files from Zenodo:
 ############################################################
 import numpy as np
 import pandas as pd

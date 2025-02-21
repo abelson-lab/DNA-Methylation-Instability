@@ -1,4 +1,9 @@
 # %%
+########################################################################
+# Conduct transcription factor motif analysis.
+#
+# Download the required input files from Zenodo:
+########################################################################
 import pandas as pd
 import numpy as np
 import re

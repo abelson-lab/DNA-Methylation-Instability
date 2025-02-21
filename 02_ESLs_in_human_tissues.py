@@ -3,9 +3,8 @@
 # Examine ESL beta values in different human tissues using the WGBS cell atlas
 # published by Loyfer et al.
 
-# Requires:
-# - directory containing .beta files for all samples in the cell atlas, which
-# can be downloaded from the Gene Expression Omnibus database (ID: GSE186458)
+# Requires a directory containing .beta files for all samples in the cell atlas,
+# which can be downloaded from the Gene Expression Omnibus database (ID: GSE186458)
 ##############################################################################
 import numpy as np
 import pandas as pd

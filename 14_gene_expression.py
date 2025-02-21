@@ -1,4 +1,10 @@
 # %%
+########################################################################
+# Conduct methylation vs. expression, age vs. expression, and promoter
+# hypermethylation analyses.
+#
+# Download the required input files from Zenodo:
+########################################################################
 import numpy as np
 import pandas as pd
 import matplotlib as mpl

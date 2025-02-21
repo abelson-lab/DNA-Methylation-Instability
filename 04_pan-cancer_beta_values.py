@@ -2,30 +2,7 @@
 #############################################################################
 # Create the matrix of ESL beta values across the pan-blood cancer cohort.
 #
-# Requires:
-# - TCGA-LAML_beta_values.RDS
-# - GSE159907_Dx_beta_values.RDS
-# - GSE124413_AML_beta_values.RDS
-# - GSE153347_beta_values.RDS
-# - GSE147667_beta_values.RDS
-# - GSE155333_beta_values.RDS
-# - GSE49031_T-ALL_beta_values.RDS
-# - GSE49031_BCP-ALL_beta_values.RDS
-# - GSE143411_timepoint1_beta_values.RDS
-# - GSE136724_beta_values.RDS
-# - FL_beta_values.RDS
-# - GSE104770_beta_values.RDS
-# - GSE197696_beta_values.RDS
-# - GSE113545_beta_values.RDS
-# - MDS_beta_values.RDS
-# - CML_beta_values.RDS
-# Download these files from Zenodo: <URL>
-
-# RESTRICTED ACCESS:
-# - EGA_CLL_490_beta_values.RDS
-#     - original data at European Genome-Phenome Archive: EGAD00010001975
-# - EGA_CLL_40_beta_values.RDS
-#     - original data at European Genome-Phenome Archive: EGAD00010000254
+# Download the required input files from Zenodo:
 #############################################################################
 import numpy as np
 import pandas as pd

@@ -1,3 +1,11 @@
+######################################################################
+# Calculate chromVAR deviation scores and visualize scATAC-seq data of
+# healthy hematopoietic cells from Granja et al.
+#
+# scATAC-seq data can be downloaded from:
+#   https://github.com/GreenleafLab/MPAL-Single-Cell-2019
+# Download other required input files from Zenodo:
+######################################################################
 library(SummarizedExperiment)
 library(SingleCellExperiment)
 library(scater)

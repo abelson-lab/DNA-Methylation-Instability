@@ -2,15 +2,8 @@
 #########################################################################
 # Cluster diagnosis and relapse pairs based on the most destabilized ESLs
 # found at one time point.
-
-# Requires:
-# - GSE159907_beta_values.RDS
-# - GSE49031_BCP-ALL_beta_values.RDS
-# Download these files from Zenodo: <URL>
-
-# RESTRICTED ACCESS:
-# - EGA_CLL_40_beta_values.RDS
-#     - original data at European Genome-Phenome Archive: EGAD00010000254
+#
+# Download the required input files from Zenodo:
 #########################################################################
 import pandas as pd
 import numpy as np

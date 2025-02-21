@@ -2,10 +2,8 @@
 ########################################################################
 # Examine DMI levels in AML patients who were sampled at different times
 # throughout their disease (diagnosis, remissions, relapses)
-
-# Requires:
-# - AML_BM_beta_values.RDS
-# Download these files from Zenodo: <URL>
+#
+# Download the required input files from Zenodo:
 ########################################################################
 import matplotlib as mpl
 import matplotlib.pyplot as plt
