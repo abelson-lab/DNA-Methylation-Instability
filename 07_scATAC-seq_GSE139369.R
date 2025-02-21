@@ -1,4 +1,3 @@
-.libPaths('/../R_4.2.2_package_library_ubuntu20')
 library(SummarizedExperiment)
 library(SingleCellExperiment)
 library(scater)
@@ -12,14 +11,14 @@ library(ggpubr)
 library(BSgenome.Hsapiens.UCSC.hg19)
 library(RColorBrewer)
 
-signac_obj = readRDS('/data/scATAC/scATAC-All-Hematopoiesis-MPAL-191120_signac.rds')
+signac_obj = readRDS('data/scATAC/scATAC-All-Hematopoiesis-MPAL-191120_signac.rds')
 myeloid_cells = c('01_HSC', '05_CMP.LMPP', '07_GMP', '08_GMP.Neut')
 lymphoid_cells = c('15_CLP.2', '16_Pre.B', '17_B', '19_CD8.N', '20_CD4.N1', '21_CD4.N2', '22_CD4.M', '23_CD8.EM', '24_CD8.CM', '25_NK')
 compare_cells = c(myeloid_cells, lymphoid_cells)
 signac_healthy = subset(signac_obj, subset = BioClassification %in% compare_cells)
 
 ### PROVIDE FOLDER; CREATE LIST OF FEATURES (DIFFERENT CPG SETS TO USE)
-folder_name = '/data/scATAC/frags/'
+folder_name = 'data/scATAC/hg19/'
 create_feature_list <- function(folder_name) {
   items <- list.files(folder_name, pattern = "\\.RDS$", full.names = TRUE, ignore.case = TRUE)
   named_list <- list()
@@ -57,8 +56,6 @@ for (n in names(features)) {
 }
 
 ### PLOT UMAPS
-figures_dir = '/plots/figures/'
-
 h_meta = signac_healthy@meta.data
 h_meta = h_meta[h_meta$BioClassification %in% compare_cells,]
 h_meta['Comparison'] = ''
@@ -69,7 +66,7 @@ h_meta = h_meta[,c('Comparison', 'LymphoidEnriched-1072-hg19-100bp-frags', 'Myel
 write.csv(h_meta, 'plots/source_data/Fig_3cd_GSE139369_chromVAR_scores.csv')
 
 ### Add embeddings for UMAP based on a subset of the full dataset
-myumap = readRDS('/data/scATAC/my_umap_coords_2.RDS')
+myumap = readRDS('data/scATAC/GSE139369_umap_subset.RDS')
 mycells = myumap[!is.na(myumap$MY_UMAP1), 'Barcode']
 
 og_meta = signac_healthy@meta.data
@@ -106,10 +103,10 @@ for (i in 1:length(features)) {
     panel.border = element_rect(color = "black", fill = NA, linewidth = 2)
   ) + ggtitle(NULL) + guides(color = "none") +
     coord_cartesian(
-      xlim = xrng + c(-0, 0),  # Expand x-axis by 1 unit on both sides
-      ylim = yrng + c(-0, 0)  # Expand y-axis by 0.5 units on both sides
+      xlim = xrng + c(-0, 0),
+      ylim = yrng + c(-0, 0)
     )
   panels[[i]] = this_fig
 }
 panelfig = panels[[1]] | panels[[2]]
-ggsave( paste0(figures_dir, 'HCpanels-12-14.png'), panelfig, width = 20, height = 10 )
+ggsave('plots/figures/Fig_3ab_healthy_hematopoietic_scATAC.png', panelfig, width = 20, height = 10)

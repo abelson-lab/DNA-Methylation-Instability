@@ -1,4 +1,3 @@
-.libPaths('/../R_4.2.2_package_library_ubuntu20')
 library(Seurat)
 library(Signac)
 library(Matrix)
@@ -10,11 +9,10 @@ library(RColorBrewer)
 library(ggpubr)
 library(patchwork)
 
-format(Sys.time(), "%H:%M:%S")
 test = readRDS('data/scATAC/GSE203251_combined_mat_array_peaks_hg38_100bp.RDS')
 
 # for all cells
-metadata = fread('data/scATAC/GSE203251_MetadataPatients.csv.gz')
+metadata = fread('data/scATAC/input_data_gotcha//GSE203251_MetadataPatients.csv.gz')
 counts = test
 
 # create chrom assay for signac to use
@@ -26,7 +24,7 @@ chrom_assay <- CreateChromatinAssay(
   min.features = 1) # 200)
 
 # load metadata related to cells and standardize cell names to match
-frags = open_fragments_dir( 'data/scATAC/input_data_gotcha/combined_atac_filtered')
+frags = open_fragments_dir('data/scATAC/input_data_gotcha/combined_atac_filtered')
 gotcha_metadata = metadata
 gotcha_metadata = as.data.frame(gotcha_metadata)
 row.names(gotcha_metadata) = gotcha_metadata$Whitelist
@@ -45,14 +43,12 @@ signac_obj <- FindTopFeatures(signac_obj, min.cutoff = 1)
 signac_obj <- RunTFIDF(signac_obj)
 # signac_obj <- RunSVD(signac_obj)
 signac_obj
-format(Sys.time(), "%H:%M:%S")
 
 signac_obj2 = subset(signac_obj, subset = JAK2_Genotype == 'WT')
 
 #########
-format(Sys.time(), "%H:%M:%S")
 ### PROVIDE FOLDER; CREATE LIST OF FEATURES (DIFFERENT CPG SETS TO USE)
-folder_name = 'data/scATAC/frags/'
+folder_name = 'data/scATAC/hg38/'
 create_feature_list <- function(folder_name) {
   # Create a list of all items within the folder
   items <- list.files(folder_name, pattern = "\\.RDS$", full.names = TRUE, ignore.case = TRUE)
@@ -93,29 +89,25 @@ for (n in names(features)) {
   }
 }
 
-# jak2_mut = rownames(signac_obj@meta.data[signac_obj@meta.data$JAK2_Genotype == 'MUT',])
-# jak2_het = rownames(signac_obj@meta.data[signac_obj@meta.data$JAK2_Genotype == 'HET',])
 jak2_wt = rownames(signac_obj@meta.data[signac_obj@meta.data$JAK2_Genotype == 'WT',])
-# jak2_nd = rownames(signac_obj@meta.data[signac_obj@meta.data$JAK2_Genotype == 'Not_detected',])
 
 mydf = signac_obj2@meta.data
-scorecol = "LymphoidEnriched-1072-hg38-100bp-frags"
-# scorecol = "MyeloidEnriched-81-hg38-100bp-frags"
 
-lymph_wt = mydf[(mydf$ClusterAnnotated %in% lymphoid_cells) & mydf$JAK2_Genotype == 'WT', scorecol]
-lymph_mut = mydf[(mydf$ClusterAnnotated %in% lymphoid_cells) & mydf$JAK2_Genotype == 'MUT', scorecol]
-myelo_wt = mydf[(mydf$ClusterAnnotated %in% myeloid_cells) & mydf$JAK2_Genotype == 'WT', scorecol]
-myelo_mut = mydf[(mydf$ClusterAnnotated %in% myeloid_cells) & mydf$JAK2_Genotype == 'MUT', scorecol]
+for (scorecol in c("LymphoidEnriched-1072-hg38-100bp-frags", "MyeloidEnriched-81-hg38-100bp-frags")) {
+  lymph_wt = mydf[(mydf$ClusterAnnotated %in% lymphoid_cells) & mydf$JAK2_Genotype == 'WT', scorecol]
+  lymph_mut = mydf[(mydf$ClusterAnnotated %in% lymphoid_cells) & mydf$JAK2_Genotype == 'MUT', scorecol]
+  myelo_wt = mydf[(mydf$ClusterAnnotated %in% myeloid_cells) & mydf$JAK2_Genotype == 'WT', scorecol]
+  myelo_mut = mydf[(mydf$ClusterAnnotated %in% myeloid_cells) & mydf$JAK2_Genotype == 'MUT', scorecol]
+  
+  wtdf <- data.frame(
+    score = c(lymph_wt, myelo_wt),
+    group = factor(rep(c("Lymphoid", "HSC/CMP/GMP"),
+                       c(length(lymph_wt), length(myelo_wt)))))
+  
+  cpgset = strsplit(scorecol, '-')[[1]][1]
+  write.csv(wtdf, paste0('plots/source_data/ExtFig_2_GSE203251_chromVAR_scores_', cpgset, '.csv'))
+}
 
-wtdf <- data.frame(
-  score = c(lymph_wt, myelo_wt),
-  group = factor(rep(c("Lymphoid", "HSC/CMP/GMP"),
-                     c(length(lymph_wt), length(myelo_wt)))))
-
-# write.csv(wtdf, 'plots/source_data/ExtFig_2c_GSE203251_chromVAR_scores_LymphoidEnriched.csv')
-write.csv(wtdf, 'plots/source_data/ExtFig_2d_GSE203251_chromVAR_scores_MyeloidEnriched.csv')
-
-figures_dir = 'plots/figures/'
 # Plot via umap coordinates from pub provided metadata
 umap_pub = as.matrix(signac_obj2@meta.data[,c('UMAP1', 'UMAP2')])
 signac_obj2[["umap_pub"]] <- CreateDimReducObject(embeddings = umap_pub, key = "UMAP_", assay = DefaultAssay(signac_obj2))
@@ -140,4 +132,4 @@ for (i in 1:length(features)) {
 }
 
 panelfig = panels[[1]] | panels[[2]]
-ggsave( paste0(figures_dir, 'MFpanels-12-14.png'), panelfig, width = 20, height = 10 )
+ggsave('plots/figures/ExtFig_2ab_scATAC_additional.png', panelfig, width = 20, height = 10 )
