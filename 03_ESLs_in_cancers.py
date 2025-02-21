@@ -46,20 +46,8 @@ mnkpl = pyreadr.read_r('data/GSE197696/beta_values.RDS')[None]
 # Mixed phenotype acute leukemia
 mpal = pyreadr.read_r('data/GSE113545/beta_values.RDS')[None]
 ### MDS / CML
-bvals = pyreadr.read_r('data/MDS_CML/beta_values.RDS')[None]
-anno = pd.read_csv('data/MDS_CML/sample_sheet.csv', skiprows=7)
-anno['id'] = anno['Sentrix_ID'].astype(str) +'_'+ anno['Sentrix_Position']
-mds = anno[anno['Sample_Name'].str.contains('MDS')]
-cml = anno[anno['Sample_Name'].str.contains('CML')]
-# Myelodysplastic syndrome
-mds = bvals.loc[:,mds['id'].iloc[:int(len(mds['id'])/2)]]
-# Chronic myeloid leukemia
-cml = bvals.loc[:,cml['id'].iloc[:int(len(cml['id'])/2)]]
-
-not_chronic_phase = ['CML Dx-16', 'CML Dx-17', 'CML Dx-22', 'CML Dx-25', 'CML Dx-41',
-                     'CML Dx-46', 'CML Dx-47', 'CML Dx-63', 'CML Dx-85']
-not_chronic_phase = anno[anno['Sample_Name'].isin(not_chronic_phase)]['id']
-cml = cml[list(set(cml.columns) - set(not_chronic_phase))]
+mds = pyreadr.read_r('data/MDS_CML/MDS_beta_values.RDS')[None]
+cml = pyreadr.read_r('data/MDS_CML/CML_beta_values.RDS')[None]
 
 # %%
 datasets_og = {0: ['Control 1\nn=41', unknown, '#9ecae1', 'Control 1 (Unknown ethnicity)'],

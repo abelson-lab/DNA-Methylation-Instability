@@ -1,0 +1,38 @@
+Patient ID,Reported at diagnosis,Detected at time point,Chr,Position,Ref,Alt,VAF,Gene ID,AA Change,ExonicFunc,Cosmic (Version 80),altID
+2,YES,Dx,2,25457242,C,T,0.438,DNMT3A,R882H,nonsynonymous SNV,"ID=COSM52944,COSM442676;OCCURENCE=1(salivary_gland),725(haematopoietic_and_lymphoid_tissue)",2522_86891
+2,YES,T1,2,25457242,C,T,0.101926047,DNMT3A,R882H,nonsynonymous SNV,"ID=COSM52944,COSM442676;OCCURENCE=1(salivary_gland),725(haematopoietic_and_lymphoid_tissue)",2522_86891
+2,YES,T2,2,25457242,C,T,0.155104848,DNMT3A,R882H,nonsynonymous SNV,"ID=COSM52944,COSM442676;OCCURENCE=1(salivary_gland),725(haematopoietic_and_lymphoid_tissue)",2522_86891
+16,YES,Dx,2,209113113,G,A,0.159,IDH1,R132C,nonsynonymous SNV,"ID=COSM28747;OCCURENCE=9(large_intestine),5(small_intestine),2(breast),1(autonomic_ganglia),19(NS),3(prostate),6(liver),191(bone),11(soft_tissue),24(skin),36(biliary_tract),320(haematopoietic_and_lymphoid_tissue),123(central_nervous_system)",2522_86210
+16,YES,T1,2,209113113,G,A,0.002508464,IDH1,R132C,nonsynonymous SNV,"ID=COSM28747;OCCURENCE=9(large_intestine),5(small_intestine),2(breast),1(autonomic_ganglia),19(NS),3(prostate),6(liver),191(bone),11(soft_tissue),24(skin),36(biliary_tract),320(haematopoietic_and_lymphoid_tissue),123(central_nervous_system)",2522_86210
+16,YES,Dx,9,5073770,G,T,0.205,JAK2,V617F,nonsynonymous SNV,"ID=COSM12600;OCCURENCE=1(NS),1(central_nervous_system),40515(haematopoietic_and_lymphoid_tissue),3(lung)",2522_86210
+16,YES,T1,9,5073770,G,T,0.042571589,JAK2,V617F,nonsynonymous SNV,"ID=COSM12600;OCCURENCE=1(NS),1(central_nervous_system),40515(haematopoietic_and_lymphoid_tissue),3(lung)",2522_86210
+16,YES,T2,9,5073770,G,T,0.052688552,JAK2,V617F,nonsynonymous SNV,"ID=COSM12600;OCCURENCE=1(NS),1(central_nervous_system),40515(haematopoietic_and_lymphoid_tissue),3(lung)",2522_86210
+16,YES,Dx,17,7577557,A,C,0.266,TP53,C242G,nonsynonymous SNV,"ID=COSM3717643,COSM3717647,COSM3717644,COSM3717645,COSM3717646,COSM44135;OCCURENCE=1(pancreas),2(breast),2(liver),1(prostate),1(biliary_tract),1(soft_tissue),2(skin)",2522_86210
+16,YES,T1,17,7577557,A,C,0.04450314,TP53,C242G,nonsynonymous SNV,"ID=COSM3717643,COSM3717647,COSM3717644,COSM3717645,COSM3717646,COSM44135;OCCURENCE=1(pancreas),2(breast),2(liver),1(prostate),1(biliary_tract),1(soft_tissue),2(skin)",2522_86210
+16,YES,T2,17,7577557,A,C,0.050065428,TP53,C242G,nonsynonymous SNV,"ID=COSM3717643,COSM3717647,COSM3717644,COSM3717645,COSM3717646,COSM44135;OCCURENCE=1(pancreas),2(breast),2(liver),1(prostate),1(biliary_tract),1(soft_tissue),2(skin)",2522_86210
+20,YES,Dx,9,5073770,G,T,0.111,JAK2,V617F,nonsynonymous SNV,"ID=COSM12600;OCCURENCE=1(NS),1(central_nervous_system),40515(haematopoietic_and_lymphoid_tissue),3(lung)",MH_6726
+20,YES,T1,9,5073770,G,T,0.02634257,JAK2,V617F,nonsynonymous SNV,"ID=COSM12600;OCCURENCE=1(NS),1(central_nervous_system),40515(haematopoietic_and_lymphoid_tissue),3(lung)",MH_6726
+20,YES,T2,9,5073770,G,T,0.005759891,JAK2,V617F,nonsynonymous SNV,"ID=COSM12600;OCCURENCE=1(NS),1(central_nervous_system),40515(haematopoietic_and_lymphoid_tissue),3(lung)",MH_6726
+20,YES,Dx,17,74732960,G,T,0.349,SRSF2,P95T,nonsynonymous SNV,"ID=COSM4385017,COSM307353;OCCURENCE=8(haematopoietic_and_lymphoid_tissue)",MH_6726
+20,YES,T1,17,74732960,G,T,0.062084049,SRSF2,P95T,nonsynonymous SNV,"ID=COSM4385017,COSM307353;OCCURENCE=8(haematopoietic_and_lymphoid_tissue)",MH_6726
+20,YES,T2,17,74732960,G,T,0.043804432,SRSF2,P95T,nonsynonymous SNV,"ID=COSM4385017,COSM307353;OCCURENCE=8(haematopoietic_and_lymphoid_tissue)",MH_6726
+21,YES,Dx,1,115258748,C,T,0.374,NRAS,G12S,nonsynonymous SNV,"ID=COSM563;OCCURENCE=4(NS),6(prostate),13(skin),1(soft_tissue),3(thyroid),157(haematopoietic_and_lymphoid_tissue),21(upper_aerodigestive_tract),9(large_intestine),1(ovary),3(lung)",MH_6747
+21,YES,T1,1,115258748,C,T,0.00242206,NRAS,G12S,nonsynonymous SNV,"ID=COSM563;OCCURENCE=4(NS),6(prostate),13(skin),1(soft_tissue),3(thyroid),157(haematopoietic_and_lymphoid_tissue),21(upper_aerodigestive_tract),9(large_intestine),1(ovary),3(lung)",MH_6747
+21,YES,T2,1,115258748,C,T,0.00131488,NRAS,G12S,nonsynonymous SNV,"ID=COSM563;OCCURENCE=4(NS),6(prostate),13(skin),1(soft_tissue),3(thyroid),157(haematopoietic_and_lymphoid_tissue),21(upper_aerodigestive_tract),9(large_intestine),1(ovary),3(lung)",MH_6747
+21,YES,Dx,X,133551203,G,A,0.784,PHF6,C280Y,nonsynonymous SNV,"ID=COSM5751924,COSM5751923;OCCURENCE=1(haematopoietic_and_lymphoid_tissue)",MH_6747
+21,YES,T1,X,133551203,G,A,0.005941314,PHF6,C280Y,nonsynonymous SNV,"ID=COSM5751924,COSM5751923;OCCURENCE=1(haematopoietic_and_lymphoid_tissue)",MH_6747
+22,YES,Dx,X,39916547,T,A,0.411,BCOR,K1452X,stopgain,,2522_86899
+22,YES,Dx,X,39932887,G,C,0.128,BCOR,S571X,stopgain,,2522_86899
+22,YES,Dx,2,25457242,C,T,0.427,DNMT3A,R882H,nonsynonymous SNV,"ID=COSM52944,COSM442676;OCCURENCE=1(salivary_gland),725(haematopoietic_and_lymphoid_tissue)",2522_86899
+22,YES,T2,2,25457242,C,T,0.012566535,DNMT3A,R882H,nonsynonymous SNV,"ID=COSM52944,COSM442676;OCCURENCE=1(salivary_gland),725(haematopoietic_and_lymphoid_tissue)",2522_86899
+22,YES,Dx,2,25462077,G,T,0.224,DNMT3A,P777H,nonsynonymous SNV,,2522_86899
+22,YES,Dx,7,148507432,C,G,0.304,EZH2,L674F,nonsynonymous SNV,,2522_86899
+22,YES,Dx,15,90631838,C,T,0.456,IDH2,R172K,nonsynonymous SNV,"ID=COSM33733;OCCURENCE=4(bone),1(liver),1(prostate),15(biliary_tract),69(central_nervous_system),195(haematopoietic_and_lymphoid_tissue),1(breast)",2522_86899
+24,YES,Dx,11,32413565,C,G,0.235,WT1,R462P,nonsynonymous SNV,"ID=COSM27291,COSM5424217,COSM5424216;OCCURENCE=14(haematopoietic_and_lymphoid_tissue)",MH_6729
+24,YES,T1,11,32413565,C,G,0.002726514,WT1,R462P,nonsynonymous SNV,"ID=COSM27291,COSM5424217,COSM5424216;OCCURENCE=14(haematopoietic_and_lymphoid_tissue)",MH_6729
+36,YES,Dx,1,115258744,C,T,0.286,NRAS,G13D,nonsynonymous SNV,"ID=COSM573;OCCURENCE=2(upper_aerodigestive_tract),10(large_intestine),27(skin),1(thyroid),296(haematopoietic_and_lymphoid_tissue),7(NS),1(endometrium)",2522_85291
+36,YES,Dx,17,7577102,C,T,0.078,TP53,G279E,nonsynonymous SNV,"ID=COSM43714,COSM99732,COSM3701288,COSM3701289;OCCURENCE=2(central_nervous_system),1(haematopoietic_and_lymphoid_tissue),6(oesophagus),7(skin),1(endometrium),2(liver),1(bone),3(urinary_tract),1(prostate),1(NS),3(breast),1(small_intestine),1(lung),1(ovary),3(large_intestine),8(upper_aerodigestive_tract)",2522_85291
+36,YES,Dx,17,7577141,C,T,0.122,TP53,G266E,nonsynonymous SNV,"ID=COSM3388174,COSM1679491,COSM10867,COSM216410;OCCURENCE=5(pancreas),1(large_intestine),2(ovary),5(upper_aerodigestive_tract),1(small_intestine),10(breast),1(vulva),7(lung),1(genital_tract),6(urinary_tract),3(liver),4(stomach),1(endometrium),1(NS),2(prostate),7(oesophagus),1(biliary_tract),1(thyroid),8(haematopoietic_and_lymphoid_tissue),3(central_nervous_system),1(soft_tissue),4(skin),1(cervix)",2522_85291
+36,YES,Dx,21,44514780,C,T,0.261,U2AF1,R156H,nonsynonymous SNV,"ID=COSM1235015,COSM1235014;OCCURENCE=20(haematopoietic_and_lymphoid_tissue),1(pancreas),1(breast)",2522_85291
+37,YES,Dx,21,44524456,G,T,0.21,U2AF1,S34Y,nonsynonymous SNV,"ID=COSM146287,COSM1190367;OCCURENCE=1(lung),32(haematopoietic_and_lymphoid_tissue)",2522_85368
+38,YES,Dx,2,209113113,G,C,0.469,IDH1,R132G,nonsynonymous SNV,"ID=COSM28749;OCCURENCE=1(large_intestine),2(breast),2(liver),23(bone),1(prostate),14(biliary_tract),64(haematopoietic_and_lymphoid_tissue),83(central_nervous_system)",2522_87221
