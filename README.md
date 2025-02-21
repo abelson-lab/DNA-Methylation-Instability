@@ -2,10 +2,9 @@
 This repository contains code to reproduce all analyses and figures from \<citation\>. Source data for all figures can be found in `plots/source_data/`. Data files (ex. β-value matrices) required to run the scripts can be downloaded from Zenodo:
 
 ### Dependencies
-#### Python:
-- pandas, scipy, matplotlib, pyreadr, sksurv, lifelines
-#### R
-- Seurat, Signac, data.table, ggplot2, patchwork, RColorBrewer
+**Python**: pandas, scipy, matplotlib, pyreadr, sksurv, lifelines
+
+**R**: Seurat, Signac, data.table, ggplot2, patchwork, RColorBrewer
 
 ### Running the scripts
 After setting up your environment and cloning the repository, execute the scripts from the command line or an IDE of your choice. Auxiliary data files necessary for some of the analyses are stored in `data/`. Larger files, such as β-value matrices, can be downloaded from Zenodo \<URL\> and placed in the `data/` directory.
@@ -19,7 +18,7 @@ Source data for the figures will be created in `plots/source_data/`. All figures
 | `01_determine_ESLs.py` | Determine the most stable (i.e., lowest variance) CpG sites from the discovery cohort and apply filtering based on β-values in purified blood cell types. | Fig. 1a,b, Supplementary Fig. 2 |
 | `02_ESLs_in_human_tissues.py` | Examine ESL methylation levels in various human tissues from the WGBS-derived methylation cell atlas by Loyfer et al. | Fig. 1c |
 | `03_ESLs_in_cancers.py`   | Calculate average β-values at ESLs in various cancer and control cohorts. | Fig. 2, Extended Data Fig. 1, Supplementary Fig. 3 |
-| `04_pan-cancer_beta_values.py` | Create the matrix of ESL β-values across the pan-blood cancer cohort. | |
+| `04_pan-cancer_beta_values.py` | Create the matrix of ESL β-values across the pan-blood cancer cohort. | Supplementary Table 2 |
 | `05_pan-cancer_recurrence_vs_beta.py` | Examine the correlation between recurrence and β-values in the pan-cancer cohort and in specific cancer types. | Supplementary Fig. 5 |
 | `06_lymphoid_myeloid_enriched_ESLs.py` | Determine lymphoid-enriched and myeloid-enriched ESLs, subsequently used for scATAC-seq analysis. | Supplementary Fig. 4 |
 | `07_scATAC-seq_GSE139369.R` | Calculate chromVAR deviation scores and visualize scATAC-seq data of healthy hematopoietic cells from Granja et al. | Fig. 3 |
@@ -29,5 +28,5 @@ Source data for the figures will be created in `plots/source_data/`. All figures
 | `11_mutations_and_DMI.py` | Examine DMI levels and mutation VAFs in AML patients who were sampled at diagnosis and post-induction therapy. | Fig. 4e, Extended Data Fig. 4 |
 | `12_age_correlation.py` | Calculate correlation between DMI and age in cohorts of healthy individuals. | Fig. 5a, Extended Data Fig. 5 |
 | `13_cardiovascular_patients_survival.py` | Conduct Kaplan-Meier and Cox proportional hazards regression analyses on the Framingham Heart Study cohort and the cardiogenic shock cohort. | Fig. 5b-h, Supplementary Fig. 7 |
-| `14_gene_expression.py` | Conduct methylation vs. expression, age vs. expression, and promoter hypermethylation analyses. | Fig. 6c,d |
+| `14_gene_expression.py` | Conduct methylation vs. expression, age vs. expression, and promoter hypermethylation analyses. | Fig. 6c,d, Supplementary Table 3 |
 | `15_motif_analysis.py` | Conduct transcription factor motif analysis on the top 234 genes. | Fig. 6e |
