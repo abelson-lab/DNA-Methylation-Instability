@@ -1,5 +1,9 @@
 # DNA-Methylation-Instability
-This repository contains code to reproduce all analyses and figures from Basrai et al. 2025: Blood-based epigenetic instability linked to human aging and disease (https://www.biorxiv.org/content/10.1101/2025.02.25.640133v1). Source data for all figures can be found in `plots/source_data/`. Data files (ex. β-value matrices) required to run the scripts can be downloaded from Zenodo: \<URL\>
+This repository contains code to reproduce all analyses and figures from Basrai et al. 2025: Blood-based epigenetic instability linked to human aging and disease:
+
+https://www.biorxiv.org/content/10.1101/2025.02.25.640133v1
+
+Source data for all figures can be found in `plots/source_data/`. Data files (ex. β-value matrices) required to run the scripts can be downloaded from Zenodo (https://zenodo.org/records/14498250).
 
 ### Dependencies
 **Python**: pandas, scipy, matplotlib, pyreadr, sksurv, lifelines
