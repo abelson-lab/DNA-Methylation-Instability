@@ -3,7 +3,7 @@ This repository contains code to reproduce all analyses and figures from Basrai 
 
 https://www.biorxiv.org/content/10.1101/2025.02.25.640133v1
 
-Source data for all figures can be found in `plots/source_data/`. Data files (ex. β-value matrices) required to run the scripts can be downloaded from Zenodo (https://zenodo.org/records/14498250).
+Source data for all figures can be found in `plots/source_data/`. Data files (ex. β-value matrices) required to run the scripts can be downloaded from Zenodo (https://zenodo.org/records/14498250). Some data used in this study has restricted access and cannot be shared - see Supplementary Table 1 for dataset accessions that can be applied for on the respective databases.
 
 ### Dependencies
 **Python**: pandas, scipy, matplotlib, pyreadr, sksurv, lifelines
