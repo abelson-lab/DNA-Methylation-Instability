@@ -42,5 +42,7 @@ recurrence_above_5 = recurrence[recurrence > 0.05]
 recurrence_below_5 = recurrence[recurrence < 0.05]
 
 ### Original pan-cancer beta value matrix
-with open('data/general/pan-cancer-3019_beta.pkl', 'rb') as fin:
-    pan_cancer_beta = pickle.load(fin)
+### This file contains restricted access data and is only used in
+###  one analysis. Commented out so other scripts will run.
+# with open('data/general/pan-cancer-3019_beta.pkl', 'rb') as fin:
+#     pan_cancer_beta = pickle.load(fin)
